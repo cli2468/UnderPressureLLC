@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 // Before/After pairs
@@ -35,8 +35,21 @@ const spring = { type: "spring", stiffness: 100, damping: 20 }
 // Individual interactive slider component
 function Slider({ before, after, label }) {
   const [pos, setPos] = useState(50)
+  const [containerW, setContainerW] = useState(0)
   const containerRef = useRef(null)
   const dragging = useRef(false)
+
+  // Track container width on mount + resize
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      setContainerW(entries[0].contentRect.width)
+    })
+    observer.observe(el)
+    setContainerW(el.offsetWidth)
+    return () => observer.disconnect()
+  }, [])
 
   const updatePos = useCallback((clientX) => {
     const rect = containerRef.current?.getBoundingClientRect()
@@ -73,18 +86,23 @@ function Slider({ before, after, label }) {
       <img
         src={after}
         alt={`${label} — after`}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"
         draggable={false}
       />
 
-      {/* Before image (clipped) */}
-      <img
-        src={before}
-        alt={`${label} — before`}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
-        draggable={false}
-      />
+      {/* Before image (clipped via overflow-hidden wrapper) */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ width: `${pos}%` }}
+      >
+        <img
+          src={before}
+          alt={`${label} — before`}
+          className="absolute top-0 left-0 h-full object-cover object-center"
+          style={{ width: containerW > 0 ? `${containerW}px` : "100vw", maxWidth: "none" }}
+          draggable={false}
+        />
+      </div>
 
       {/* Slider line */}
       <div
@@ -141,9 +159,6 @@ export default function BeforeAfter() {
           transition={spring}
           className="text-center mb-14"
         >
-          <p className="text-sm text-text-muted uppercase tracking-widest mb-2">
-            Our Case Studies
-          </p>
           <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4">
             Professional. Reliable. Results.
           </h2>

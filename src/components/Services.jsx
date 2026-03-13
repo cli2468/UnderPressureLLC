@@ -31,6 +31,7 @@ const imageMap = {
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
+/* ── Desktop card (carousel) ── */
 function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
   const isExpanded = expandedCard === `${tab}-${card.name}`
 
@@ -43,7 +44,7 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
       viewport={{ once: true }}
       transition={{ ...spring, delay: i * 0.06 }}
       style={{ width: "calc((100% - 2 * 1.25rem) / 3)", minWidth: "260px" }}
-      className="relative flex-shrink-0 aspect-[4/5] rounded-2xl overflow-hidden snap-start group"
+      className="relative flex-shrink-0 aspect-[4/5] rounded-2xl overflow-hidden snap-start group cursor-pointer hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-shadow duration-300"
     >
       <img
         src={imageMap[card.name]}
@@ -68,10 +69,10 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
             <CaretDown
               size={18}
               weight="bold"
-              className={`shrink-0 ml-2 transition-all duration-300 ${
+              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${
                 isExpanded
-                  ? "rotate-180 text-text-primary opacity-100"
-                  : "text-text-primary opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
+                  ? "rotate-180 opacity-100"
+                  : "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
               }`}
             />
           </button>
@@ -96,6 +97,59 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
   )
 }
 
+/* ── Mobile bento tile ── */
+function MobileTile({ card, expandedCard, setExpandedCard, tab }) {
+  const isExpanded = expandedCard === `${tab}-${card.name}`
+
+  return (
+    <div className="relative rounded-xl overflow-hidden group">
+      <img
+        src={imageMap[card.name]}
+        alt={card.name}
+        className="w-full aspect-[3/2] object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent" />
+
+      <div className="absolute bottom-3 left-3 right-3">
+        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.1)] overflow-hidden">
+          <button
+            onClick={() =>
+              setExpandedCard(isExpanded ? null : `${tab}-${card.name}`)
+            }
+            className="w-full flex items-center justify-between px-4 py-2.5 text-left"
+          >
+            <h3 className="font-semibold text-text-primary text-sm">
+              {card.name}
+            </h3>
+            <CaretDown
+              size={16}
+              weight="bold"
+              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${
+                isExpanded ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <p className="px-4 pb-3 text-xs text-text-body leading-relaxed">
+                  {card.description}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Services() {
   const [tab, setTab] = useState("residential")
   const [expandedCard, setExpandedCard] = useState(null)
@@ -113,7 +167,7 @@ export default function Services() {
   return (
     <section id="services" className="py-24 bg-surface">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-        {/* Header row — title left, CTA right */}
+        {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -121,21 +175,23 @@ export default function Services() {
             viewport={{ once: true }}
             transition={spring}
           >
-            <p className="text-sm text-text-muted uppercase tracking-widest mb-2">
-              Our Services
-            </p>
             <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase">
-              Top-Rated Exterior Cleaning
-              <br className="hidden md:block" />
-              Services That Deliver
+              <span className="md:hidden">Our Services</span>
+              <span className="hidden md:inline">
+                Top-Rated Exterior Cleaning
+                <br />
+                Services That Deliver
+              </span>
             </h2>
           </motion.div>
 
+          {/* CTA — desktop only here, mobile gets it below */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...spring, delay: 0.1 }}
+            className="hidden md:block"
           >
             <a
               href="#contact"
@@ -168,27 +224,24 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Carousel with flanking arrows */}
-      <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-        {/* Left arrow */}
+      {/* ── Desktop: Carousel with flanking arrows ── */}
+      <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 hidden md:block">
         <button
           onClick={() => scroll(-1)}
-          className="hidden md:flex absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
+          className="flex absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
           aria-label="Scroll left"
         >
           <CaretLeft size={22} className="text-text-primary" weight="bold" />
         </button>
 
-        {/* Right arrow */}
         <button
           onClick={() => scroll(1)}
-          className="hidden md:flex absolute right-0 lg:right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
+          className="flex absolute right-0 lg:right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
           aria-label="Scroll right"
         >
           <CaretRight size={22} className="text-text-primary" weight="bold" />
         </button>
 
-        {/* Cards */}
         <div
           ref={scrollRef}
           className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
@@ -204,6 +257,32 @@ export default function Services() {
               tab={tab}
             />
           ))}
+        </div>
+      </div>
+
+      {/* ── Mobile: Bento grid ── */}
+      <div className="md:hidden max-w-[1440px] mx-auto px-6">
+        <div className="grid grid-cols-2 gap-3">
+          {cards.map((card) => (
+            <MobileTile
+              key={`${tab}-${card.name}`}
+              card={card}
+              expandedCard={expandedCard}
+              setExpandedCard={setExpandedCard}
+              tab={tab}
+            />
+          ))}
+        </div>
+
+        {/* Mobile CTA */}
+        <div className="mt-8 text-center">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full text-sm hover:bg-accent-light hover:text-brand-dark transition-all duration-200 active:scale-[0.98]"
+          >
+            Get a Free Estimate
+            <ArrowUpRight size={16} weight="bold" />
+          </a>
         </div>
       </div>
     </section>

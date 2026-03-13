@@ -1,36 +1,28 @@
 import { motion } from "framer-motion"
 import { Phone, ArrowRight } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import heroImg from "../assets/images/before-after/AfterHouse.jpg"
+import heroImg from "../assets/images/gallery/Hero1.jpg"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 export default function Hero() {
   return (
     <section className="relative min-h-[100dvh] bg-brand-dark overflow-hidden">
-      {/* Background image — right side on desktop, full on mobile with overlay */}
-      <div className="absolute inset-0 md:left-[45%]">
+      {/* Background image — full bleed */}
+      <div className="absolute inset-0">
         <img
           src={heroImg}
-          alt="Freshly cleaned residential home exterior"
-          className="w-full h-full object-cover"
+          alt="Freshly cleaned residential driveway and home exterior"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/80 to-brand-dark/20 md:from-brand-dark md:via-brand-dark/60 md:to-transparent" />
+        {/* Layered gradients: dark bottom-left for text legibility, subtle top vignette */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/90 via-brand-dark/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-transparent to-brand-dark/30" />
       </div>
 
       {/* Content — left aligned */}
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center min-h-[100dvh]">
         <div className="max-w-xl py-24 md:py-0">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ ...spring, delay: 0.2 }}
-            className="mb-6"
-          >
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent-light border border-accent/30 px-3 py-1 rounded-full">
-              NWI Life in the Spotlight — Business of the Month
-            </span>
-          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, x: -40 }}
@@ -79,11 +71,11 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="mt-12 flex items-center gap-6 text-text-muted text-sm"
+            className="mt-12"
           >
-            <span>{business.reviews.count}+ Five-Star Reviews</span>
-            <span className="w-px h-4 bg-white/20" />
-            <span>{business.serviceArea[0]}</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-accent-light border border-accent/30 px-3 py-1 rounded-full">
+              NWI Life in the Spotlight — Business of the Month
+            </span>
           </motion.div>
         </div>
       </div>

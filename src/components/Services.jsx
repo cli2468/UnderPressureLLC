@@ -51,10 +51,8 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
         alt={card.name}
         className="absolute inset-0 w-full h-full object-cover"
       />
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent transition-opacity duration-300 group-hover:from-brand-dark/80" />
 
-      {/* Bubble caption with expandable description */}
       <div className="absolute bottom-5 left-5 right-5">
         <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] overflow-hidden">
           <button
@@ -97,56 +95,51 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
   )
 }
 
-/* ── Mobile bento tile ── */
-function MobileTile({ card, expandedCard, setExpandedCard, tab }) {
+/* ── Mobile accordion row ── */
+function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
   const isExpanded = expandedCard === `${tab}-${card.name}`
+  const isLast = false // handled by parent
 
   return (
-    <div className="relative rounded-xl overflow-hidden group">
-      <img
-        src={imageMap[card.name]}
-        alt={card.name}
-        className="w-full aspect-[3/2] object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent" />
-
-      <div className="absolute bottom-3 left-3 right-3">
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.1)] overflow-hidden">
-          <button
-            onClick={() =>
-              setExpandedCard(isExpanded ? null : `${tab}-${card.name}`)
-            }
-            className="w-full flex items-center justify-between px-4 py-2.5 text-left"
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ ...spring, delay: i * 0.04 }}
+    >
+      <button
+        onClick={() =>
+          setExpandedCard(isExpanded ? null : `${tab}-${card.name}`)
+        }
+        className="w-full flex items-center justify-between py-4 text-left"
+      >
+        <h3 className="font-semibold text-text-primary text-base">
+          {card.name}
+        </h3>
+        <CaretDown
+          size={18}
+          weight="bold"
+          className={`shrink-0 ml-3 text-text-primary transition-transform duration-300 ${
+            isExpanded ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden"
           >
-            <h3 className="font-semibold text-text-primary text-sm">
-              {card.name}
-            </h3>
-            <CaretDown
-              size={16}
-              weight="bold"
-              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${
-                isExpanded ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <p className="px-4 pb-3 text-xs text-text-body leading-relaxed">
-                  {card.description}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
+            <p className="pb-4 text-sm text-text-body leading-relaxed">
+              {card.description}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   )
 }
 
@@ -165,15 +158,16 @@ export default function Services() {
   }
 
   return (
-    <section id="services" className="py-24 bg-surface">
+    <section id="services" className="py-24 bg-white">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-        {/* Header row */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={spring}
+            className="text-center md:text-left"
           >
             <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase">
               <span className="md:hidden">Our Services</span>
@@ -185,7 +179,6 @@ export default function Services() {
             </h2>
           </motion.div>
 
-          {/* CTA — desktop only here, mobile gets it below */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -204,7 +197,7 @@ export default function Services() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex justify-center md:justify-start gap-2 mb-8">
           {["residential", "commercial"].map((t) => (
             <button
               key={t}
@@ -215,7 +208,7 @@ export default function Services() {
               className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${
                 tab === t
                   ? "bg-brand-dark text-white shadow-[0_4px_20px_rgba(26,35,50,0.15)]"
-                  : "bg-white text-text-body hover:bg-surface-mid border border-surface-mid"
+                  : "bg-surface text-text-body hover:bg-surface-mid border border-surface-mid"
               }`}
             >
               {t}
@@ -224,7 +217,7 @@ export default function Services() {
         </div>
       </div>
 
-      {/* ── Desktop: Carousel with flanking arrows ── */}
+      {/* ── Desktop: Carousel ── */}
       <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 hidden md:block">
         <button
           onClick={() => scroll(-1)}
@@ -260,13 +253,14 @@ export default function Services() {
         </div>
       </div>
 
-      {/* ── Mobile: Bento grid ── */}
+      {/* ── Mobile: Clean accordion list ── */}
       <div className="md:hidden max-w-[1440px] mx-auto px-6">
-        <div className="grid grid-cols-2 gap-3">
-          {cards.map((card) => (
-            <MobileTile
+        <div className="divide-y divide-surface-mid">
+          {cards.map((card, i) => (
+            <MobileAccordion
               key={`${tab}-${card.name}`}
               card={card}
+              i={i}
               expandedCard={expandedCard}
               setExpandedCard={setExpandedCard}
               tab={tab}

@@ -27,7 +27,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-white">
+    <section id="contact" className="py-24 bg-surface">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="grid lg:grid-cols-5 gap-16">
           {/* Left column — info */}
@@ -38,7 +38,7 @@ export default function Contact() {
             transition={spring}
             className="lg:col-span-2"
           >
-            <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4">
+            <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4 text-center md:text-left">
               Get Your Free Estimate
             </h2>
             <p className="text-text-body leading-relaxed max-w-[45ch] mb-10">

@@ -20,10 +20,10 @@ const ourWay = [
 
 export default function WhyUs() {
   return (
-    <section id="about" className="py-24 bg-surface">
+    <section id="about" className="py-24 bg-white">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Mobile layout: heading, video, then content ── */}
-        <div className="md:hidden mb-8">
+        <div className="md:hidden mb-8 text-center">
           <h2 className="font-display text-3xl tracking-tight text-text-primary uppercase mb-6">
             The Wrong Company
             <br />

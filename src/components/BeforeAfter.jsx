@@ -149,7 +149,7 @@ export default function BeforeAfter() {
   const currentPairs = pages[activePage]
 
   return (
-    <section id="case-studies" className="py-24 bg-surface">
+    <section id="case-studies" className="py-24 bg-surface-mid/30">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* Header — centered */}
         <motion.div
@@ -157,7 +157,7 @@ export default function BeforeAfter() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="text-center mb-14"
+          className="text-center mb-14 px-6 md:px-0"
         >
           <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4">
             Professional. Reliable. Results.

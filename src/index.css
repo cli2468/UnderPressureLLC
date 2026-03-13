@@ -52,7 +52,7 @@ body {
 }
 
 .animate-marquee-speed {
-  animation-duration: 6s;
+  animation-duration: 3s;
 }
 
 @media (min-width: 768px) {

@@ -30,15 +30,21 @@ export default function WhyUs() {
             <br />
             Can Cost You Thousands
           </h2>
+          <p className="text-text-body leading-relaxed mb-6">
+            Most exterior cleaning companies blast surfaces with high pressure
+            to get the job done fast. The result? Damaged property and repairs
+            that cost far more than the cleaning itself.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-stretch">
           {/* Left — vertical video */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={spring}
+            className="relative h-full min-h-[400px] md:min-h-0"
           >
             <video
               src={videoSrc}
@@ -46,7 +52,7 @@ export default function WhyUs() {
               loop
               muted
               playsInline
-              className="w-full aspect-[3/4] max-h-[540px] object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)]"
+              className="w-full h-full object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] md:absolute md:inset-0"
             />
           </motion.div>
 
@@ -66,7 +72,7 @@ export default function WhyUs() {
               <br />
               Thousands
             </h2>
-            <p className="text-text-body leading-relaxed mb-8 max-w-[50ch]">
+            <p className="hidden md:block text-text-body leading-relaxed mb-8 max-w-[50ch]">
               Most exterior cleaning companies blast surfaces with high pressure
               to get the job done fast. The result? Damaged property and repairs
               that cost far more than the cleaning itself.

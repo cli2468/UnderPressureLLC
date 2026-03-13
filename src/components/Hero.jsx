@@ -7,7 +7,7 @@ const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 export default function Hero() {
   return (
-    <section className="relative h-[100dvh] md:min-h-[100dvh] bg-brand-dark overflow-hidden">
+    <section className="relative h-[100dvh] md:min-h-[100dvh] md:h-auto bg-brand-dark overflow-hidden">
       {/* Background image — full bleed, positioned higher on desktop */}
       <div className="absolute inset-0">
         <img
@@ -20,8 +20,8 @@ export default function Hero() {
       </div>
 
       {/* Content — left aligned */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-[100dvh] md:min-h-[100dvh]">
-        <div className="max-w-xl py-24 md:py-0">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[100dvh]">
+        <div className="max-w-xl py-16 md:py-0">
 
           <motion.h1
             initial={{ opacity: 0, x: -40 }}

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CaretLeft, CaretRight, CaretDown, ArrowUpRight } from "@phosphor-icons/react"
 import { services } from "../data/siteData"
@@ -149,11 +149,23 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
   )
 }
 
+function getDefaultExpanded(t) {
+  const list = t === "residential" ? services.residential : services.commercial
+  const isMobile = window.matchMedia("(max-width: 767px)").matches
+  const idx = isMobile ? 0 : 1
+  return `${t}-${list[idx].name}`
+}
+
 export default function Services() {
   const [tab, setTab] = useState("residential")
   const cards = tab === "residential" ? services.residential : services.commercial
-  const [expandedCard, setExpandedCard] = useState(`residential-${services.residential[0].name}`)
+  const [expandedCard, setExpandedCard] = useState(`residential-${services.residential[1].name}`)
   const scrollRef = useRef(null)
+
+  // Set correct default based on screen size after mount
+  useEffect(() => {
+    setExpandedCard(getDefaultExpanded("residential"))
+  }, [])
 
   function scroll(dir) {
     const el = scrollRef.current
@@ -210,8 +222,8 @@ export default function Services() {
               key={t}
               onClick={() => {
                 setTab(t)
-                const firstCard = t === "residential" ? services.residential[0] : services.commercial[0]
-                setExpandedCard(`${t}-${firstCard.name}`)
+                const middleCard = t === "residential" ? services.residential[1] : services.commercial[1]
+                setExpandedCard(`${t}-${middleCard.name}`)
               }}
               className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${
                 tab === t

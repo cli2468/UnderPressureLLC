@@ -13,8 +13,7 @@ export default function Stats() {
   return (
     <section className="relative bg-brand-dark border-y border-white/10 py-4 md:py-5 overflow-hidden">
       <div
-        className="flex animate-marquee whitespace-nowrap"
-        style={{ animationDuration: "12s" }}
+        className="flex animate-marquee animate-marquee-speed whitespace-nowrap"
       >
         {marqueeItems.map((item, i) => {
           const Icon = item.icon

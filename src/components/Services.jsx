@@ -95,10 +95,9 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
   )
 }
 
-/* ── Mobile accordion row ── */
+/* ── Mobile accordion row with image ── */
 function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
   const isExpanded = expandedCard === `${tab}-${card.name}`
-  const isLast = false // handled by parent
 
   return (
     <motion.div
@@ -133,6 +132,13 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
+            {imageMap[card.name] && (
+              <img
+                src={imageMap[card.name]}
+                alt={card.name}
+                className="w-full aspect-[16/9] object-cover rounded-xl mb-3"
+              />
+            )}
             <p className="pb-4 text-sm text-text-body leading-relaxed">
               {card.description}
             </p>
@@ -145,9 +151,9 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
 
 export default function Services() {
   const [tab, setTab] = useState("residential")
-  const [expandedCard, setExpandedCard] = useState(null)
-  const scrollRef = useRef(null)
   const cards = tab === "residential" ? services.residential : services.commercial
+  const [expandedCard, setExpandedCard] = useState(`residential-${services.residential[0].name}`)
+  const scrollRef = useRef(null)
 
   function scroll(dir) {
     const el = scrollRef.current
@@ -169,6 +175,7 @@ export default function Services() {
             transition={spring}
             className="text-center md:text-left"
           >
+            <div className="w-10 h-1 bg-accent rounded-full mx-auto md:mx-0 mb-4 md:hidden" />
             <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase">
               <span className="md:hidden">Our Services</span>
               <span className="hidden md:inline">
@@ -203,7 +210,8 @@ export default function Services() {
               key={t}
               onClick={() => {
                 setTab(t)
-                setExpandedCard(null)
+                const firstCard = t === "residential" ? services.residential[0] : services.commercial[0]
+                setExpandedCard(`${t}-${firstCard.name}`)
               }}
               className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${
                 tab === t

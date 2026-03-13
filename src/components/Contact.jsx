@@ -38,6 +38,7 @@ export default function Contact() {
             transition={spring}
             className="lg:col-span-2"
           >
+            <div className="w-10 h-1 bg-accent rounded-full mx-auto md:mx-0 mb-4 md:hidden" />
             <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4 text-center md:text-left">
               Get Your Free Estimate
             </h2>

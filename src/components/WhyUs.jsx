@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Warning, ShieldCheck, Drop, ArrowRight, FileText, X, Check } from "@phosphor-icons/react"
+import { Warning, ShieldCheck, ArrowRight, FileText, X, Check } from "@phosphor-icons/react"
 import videoSrc from "../assets/images/gallery/Pressure Wash.mp4"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
@@ -24,6 +24,7 @@ export default function WhyUs() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Mobile layout: heading, video, then content ── */}
         <div className="md:hidden mb-8 text-center">
+          <div className="w-10 h-1 bg-accent rounded-full mx-auto mb-4" />
           <h2 className="font-display text-3xl tracking-tight text-text-primary uppercase mb-6">
             The Wrong Company
             <br />
@@ -71,43 +72,47 @@ export default function WhyUs() {
               that cost far more than the cleaning itself.
             </p>
 
-            {/* VS Comparison */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {/* Other Companies */}
-              <div className="bg-white border border-red-200/60 rounded-2xl p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center">
-                    <Warning size={20} weight="duotone" className="text-red-500" />
+            {/* VS Comparison — stacked full-width cards */}
+            <div className="space-y-4 mb-8">
+              {/* Under Pressure — featured card */}
+              <div className="bg-accent/5 border-2 border-accent/25 rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-accent/15 rounded-xl flex items-center justify-center">
+                    <ShieldCheck size={22} weight="duotone" className="text-accent" />
                   </div>
-                  <h3 className="font-display text-sm uppercase tracking-tight text-text-primary">
-                    Other Companies
-                  </h3>
-                </div>
-                <ul className="space-y-3">
-                  {theirWay.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <X size={14} weight="bold" className="text-red-400 mt-1 shrink-0" />
-                      <span className="text-sm text-text-body leading-snug">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Under Pressure */}
-              <div className="bg-white border border-accent/20 rounded-2xl p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-9 h-9 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <ShieldCheck size={20} weight="duotone" className="text-accent" />
-                  </div>
-                  <h3 className="font-display text-sm uppercase tracking-tight text-text-primary">
+                  <h3 className="font-display text-base uppercase tracking-tight text-text-primary">
                     Under Pressure
                   </h3>
                 </div>
                 <ul className="space-y-3">
                   {ourWay.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <Check size={14} weight="bold" className="text-accent mt-1 shrink-0" />
-                      <span className="text-sm text-text-body leading-snug">{item}</span>
+                    <li key={item} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-accent/15 rounded-full flex items-center justify-center mt-0.5 shrink-0">
+                        <Check size={12} weight="bold" className="text-accent" />
+                      </div>
+                      <span className="text-sm text-text-primary font-medium leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Other Companies — muted card */}
+              <div className="bg-surface border border-surface-mid rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                    <Warning size={22} weight="duotone" className="text-red-400" />
+                  </div>
+                  <h3 className="font-display text-base uppercase tracking-tight text-text-muted">
+                    Other Companies
+                  </h3>
+                </div>
+                <ul className="space-y-3">
+                  {theirWay.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <div className="w-5 h-5 bg-red-50 rounded-full flex items-center justify-center mt-0.5 shrink-0">
+                        <X size={12} weight="bold" className="text-red-400" />
+                      </div>
+                      <span className="text-sm text-text-muted leading-snug">{item}</span>
                     </li>
                   ))}
                 </ul>

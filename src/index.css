@@ -48,3 +48,13 @@ body {
 .animate-marquee {
   animation: marquee linear infinite;
 }
+
+.animate-marquee-speed {
+  animation-duration: 6s;
+}
+
+@media (min-width: 768px) {
+  .animate-marquee-speed {
+    animation-duration: 12s;
+  }
+}

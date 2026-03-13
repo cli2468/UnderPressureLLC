@@ -24,22 +24,37 @@ const pairs = [
   { before: beforeGutters, after: afterGutters, label: "Gutter Cleaning" },
 ]
 
-// Group pairs into pages of 2
-const pages = []
-for (let i = 0; i < pairs.length; i += 2) {
-  pages.push(pairs.slice(i, i + 2))
+// Desktop: 2 per page. Mobile: 1 per page.
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)")
+    setMobile(mq.matches)
+    const handler = (e) => setMobile(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
+  return mobile
+}
+
+function buildPages(isMobile) {
+  const perPage = isMobile ? 1 : 2
+  const pages = []
+  for (let i = 0; i < pairs.length; i += perPage) {
+    pages.push(pairs.slice(i, i + perPage))
+  }
+  return pages
 }
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 // Individual interactive slider component
-function Slider({ before, after, label }) {
+function Slider({ before, after, label, onInteract }) {
   const [pos, setPos] = useState(50)
   const [containerW, setContainerW] = useState(0)
   const containerRef = useRef(null)
   const dragging = useRef(false)
 
-  // Track container width on mount + resize
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -63,6 +78,7 @@ function Slider({ before, after, label }) {
     dragging.current = true
     e.currentTarget.setPointerCapture(e.pointerId)
     updatePos(e.clientX)
+    onInteract?.()
   }
 
   const onPointerMove = (e) => {
@@ -109,22 +125,9 @@ function Slider({ before, after, label }) {
         className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
         style={{ left: `${pos}%`, transform: "translateX(-50%)" }}
       >
-        {/* Handle */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.25)] flex items-center justify-center">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            className="text-brand-dark"
-          >
-            <path
-              d="M5 3L2 8L5 13M11 3L14 8L11 13"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-brand-dark">
+            <path d="M5 3L2 8L5 13M11 3L14 8L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>
@@ -140,13 +143,44 @@ function Slider({ before, after, label }) {
           After
         </span>
       </div>
+
+      {/* Service label */}
+      <div className="absolute top-5 left-5">
+        <span className="bg-brand-dark/70 backdrop-blur-sm text-white font-semibold text-xs px-3 py-1.5 rounded-full">
+          {label}
+        </span>
+      </div>
     </div>
   )
 }
 
 export default function BeforeAfter() {
+  const isMobile = useIsMobile()
+  const pages = buildPages(isMobile)
   const [activePage, setActivePage] = useState(0)
-  const currentPairs = pages[activePage]
+  const pausedUntil = useRef(0)
+
+  // Reset page if pages array shrinks on resize
+  useEffect(() => {
+    if (activePage >= pages.length) setActivePage(0)
+  }, [pages.length, activePage])
+
+  // Auto-scroll — pauses when user interacts with slider
+  useEffect(() => {
+    if (!isMobile) return
+    const timer = setInterval(() => {
+      if (Date.now() < pausedUntil.current) return
+      setActivePage((p) => (p + 1) % pages.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [isMobile, pages.length])
+
+  function handleInteract() {
+    // Pause auto-scroll for 10 seconds after user touches slider
+    pausedUntil.current = Date.now() + 10000
+  }
+
+  const currentPairs = pages[activePage] || pages[0]
 
   return (
     <section id="case-studies" className="py-24 bg-surface-mid/30">
@@ -157,14 +191,15 @@ export default function BeforeAfter() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="text-center mb-14 px-6 md:px-0"
+          className="text-center mb-14"
         >
+          <div className="w-10 h-1 bg-accent rounded-full mx-auto mb-4 md:hidden" />
           <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-4">
             Professional. Reliable. Results.
           </h2>
         </motion.div>
 
-        {/* 2 interactive sliders per page */}
+        {/* Sliders */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activePage}
@@ -180,6 +215,7 @@ export default function BeforeAfter() {
                 before={pair.before}
                 after={pair.after}
                 label={pair.label}
+                onInteract={handleInteract}
               />
             ))}
           </motion.div>
@@ -190,7 +226,10 @@ export default function BeforeAfter() {
           {pages.map((_, i) => (
             <button
               key={i}
-              onClick={() => setActivePage(i)}
+              onClick={() => {
+                setActivePage(i)
+                handleInteract()
+              }}
               aria-label={`Page ${i + 1}`}
               className={`rounded-full transition-all duration-300 ${
                 i === activePage

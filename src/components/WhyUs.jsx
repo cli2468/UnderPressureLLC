@@ -23,8 +23,8 @@ export default function WhyUs() {
     <section id="about" className="py-24 bg-surface-mid/30 md:bg-white">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Mobile layout: heading, video, then content ── */}
-        <div className="md:hidden mb-8 text-center">
-          <div className="w-10 h-1 bg-accent rounded-full mx-auto mb-4" />
+        <div className="md:hidden mb-8 text-left">
+          <div className="w-10 h-1 bg-accent rounded-full mb-4" />
           <h2 className="font-display text-3xl tracking-tight text-text-primary uppercase mb-6">
             The Wrong Company
             <br />

@@ -2,13 +2,11 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Star,
-  GoogleLogo,
-  FacebookLogo,
   CaretLeft,
   CaretRight,
 } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import reviewLogo from "../assets/logos/UnderPressureLogo.png"
+import reviewPhoto from "../assets/images/services/UPWorker.jpg"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
@@ -60,6 +58,12 @@ const allReviews = [
   },
 ]
 
+function formatReviewerName(name) {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length < 2) return name
+  return `${parts[0]} ${parts[parts.length - 1][0]}.`
+}
+
 function StarRow({ size = 16 }) {
   return (
     <div className="flex gap-0.5">
@@ -70,11 +74,57 @@ function StarRow({ size = 16 }) {
   )
 }
 
+function BrandGoogleIcon({ size = 16, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        fill="#4285F4"
+        d="M23.49 12.27c0-.79-.07-1.54-.2-2.27H12v4.3h6.45a5.52 5.52 0 0 1-2.4 3.62v3h3.88c2.27-2.09 3.56-5.17 3.56-8.65Z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.07.72-2.44 1.15-4.07 1.15-3.13 0-5.78-2.12-6.73-4.97H1.27v3.1A12 12 0 0 0 12 24Z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.27 14.27A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.27v-3.1H1.27A12 12 0 0 0 0 12c0 1.93.46 3.75 1.27 5.37l4-3.1Z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 4.77c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.95 1.2 15.24 0 12 0A12 12 0 0 0 1.27 6.63l4 3.1c.95-2.85 3.6-4.96 6.73-4.96Z"
+      />
+    </svg>
+  )
+}
+
+function BrandFacebookIcon({ size = 16, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        fill="#1877F2"
+        d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.02 10.12 11.93v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.09 24 18.1 24 12.07Z"
+      />
+    </svg>
+  )
+}
+
 function PlatformIcon({ platform, size = 16 }) {
   if (platform === "google") {
-    return <GoogleLogo size={size} weight="bold" className="text-text-muted" />
+    return <BrandGoogleIcon size={size} />
   }
-  return <FacebookLogo size={size} weight="bold" className="text-text-muted" />
+  return <BrandFacebookIcon size={size} />
 }
 
 function MobileReviewCard({ review }) {
@@ -87,7 +137,7 @@ function MobileReviewCard({ review }) {
       <p className="text-text-light/85 leading-relaxed mb-4 italic review-text">
         &ldquo;{review.text}&rdquo;
       </p>
-      <p className="text-sm font-semibold text-white mt-auto">{review.name}</p>
+      <p className="text-sm font-semibold text-white mt-auto">{formatReviewerName(review.name)}</p>
     </div>
   )
 }
@@ -97,10 +147,11 @@ export default function Reviews() {
   const [mobileIdx, setMobileIdx] = useState(0)
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false)
 
-  const desktopPages = []
-  for (let i = 0; i < allReviews.length; i += 3) {
-    desktopPages.push(allReviews.slice(i, i + 3))
-  }
+  const desktopPages = [
+    [allReviews[0], allReviews[4], allReviews[8]],
+    [allReviews[1], allReviews[3], allReviews[7]],
+    [allReviews[5], allReviews[2], allReviews[6]],
+  ]
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
@@ -125,14 +176,6 @@ export default function Reviews() {
     setMobileIdx((current) => (current + 1) % allReviews.length)
   }
 
-  function desktopPrev() {
-    setDesktopPage((current) => (current - 1 + desktopPages.length) % desktopPages.length)
-  }
-
-  function desktopNext() {
-    setDesktopPage((current) => (current + 1) % desktopPages.length)
-  }
-
   return (
     <section id="reviews" className="py-24 bg-brand-dark">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
@@ -142,30 +185,33 @@ export default function Reviews() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={spring}
-            className="text-center mb-8"
+            className="mb-8"
           >
-            <img
-              src={reviewLogo}
-              alt={business.name}
-              className="h-20 w-auto mx-auto mb-5"
-            />
+            <div className="rounded-[28px] overflow-hidden border border-white/10 shadow-[0_18px_40px_rgba(8,15,28,0.35)] mb-6">
+              <img
+                src={reviewPhoto}
+                alt="Under Pressure crew member pressure washing a home exterior"
+                className="w-full h-[240px] object-cover object-center"
+              />
+            </div>
+
             <div className="flex justify-center gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={24} weight="fill" className="text-yellow-400" />
               ))}
             </div>
-            <div className="font-display text-5xl text-white tracking-tight mb-1">
+            <div className="font-display text-5xl text-white tracking-tight text-center mb-1">
               {business.reviews.count}+
             </div>
-            <div className="text-text-muted text-base mb-4">Five-Star Reviews</div>
+            <div className="text-text-muted text-base text-center mb-4">Five-Star Reviews</div>
             <div className="flex justify-center gap-4 items-center text-text-muted">
               <div className="flex items-center gap-1.5">
-                <GoogleLogo size={18} weight="bold" />
+                <BrandGoogleIcon size={18} />
                 <span className="text-sm font-medium">Google</span>
               </div>
               <div className="w-px h-4 bg-white/15" />
               <div className="flex items-center gap-1.5">
-                <FacebookLogo size={18} weight="bold" />
+                <BrandFacebookIcon size={18} />
                 <span className="text-sm font-medium">Facebook</span>
               </div>
             </div>
@@ -174,14 +220,14 @@ export default function Reviews() {
           <div className="relative">
             <button
               onClick={mobilePrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
               aria-label="Previous review"
             >
               <CaretLeft size={18} weight="bold" className="text-white" />
             </button>
             <button
               onClick={mobileNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
               aria-label="Next review"
             >
               <CaretRight size={18} weight="bold" className="text-white" />
@@ -207,9 +253,8 @@ export default function Reviews() {
                   key={i}
                   onClick={() => setMobileIdx(i)}
                   aria-label={`Review ${i + 1}`}
-                  className={`rounded-full transition-all duration-300 ${
-                    i === mobileIdx ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-white/20"
-                  }`}
+                  className={`rounded-full transition-all duration-300 ${i === mobileIdx ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-white/20"
+                    }`}
                 />
               ))}
             </div>
@@ -224,6 +269,13 @@ export default function Reviews() {
             transition={spring}
             className="md:col-span-2 sticky top-32"
           >
+            <div className="rounded-[28px] overflow-hidden border border-white/10 shadow-[0_18px_40px_rgba(8,15,28,0.35)] mb-6">
+              <img
+                src={reviewPhoto}
+                alt="Under Pressure crew member pressure washing a home exterior"
+                className="w-full h-[480px] object-cover object-center"
+              />
+            </div>
             <div className="flex gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={28} weight="fill" className="text-yellow-400" />
@@ -235,30 +287,14 @@ export default function Reviews() {
             <div className="text-text-muted text-lg mb-8">Five-Star Reviews</div>
             <div className="flex gap-5 items-center text-text-muted mb-10">
               <div className="flex items-center gap-2">
-                <GoogleLogo size={22} weight="bold" />
+                <BrandGoogleIcon size={22} />
                 <span className="text-sm font-medium">Google</span>
               </div>
               <div className="w-px h-5 bg-white/15" />
               <div className="flex items-center gap-2">
-                <FacebookLogo size={22} weight="bold" />
+                <BrandFacebookIcon size={22} />
                 <span className="text-sm font-medium">Facebook</span>
               </div>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={desktopPrev}
-                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
-                aria-label="Previous desktop review"
-              >
-                <CaretLeft size={18} weight="bold" />
-              </button>
-              <button
-                onClick={desktopNext}
-                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
-                aria-label="Next desktop review"
-              >
-                <CaretRight size={18} weight="bold" />
-              </button>
             </div>
           </motion.div>
 
@@ -275,7 +311,7 @@ export default function Reviews() {
                 {desktopPages[desktopPage].map((review) => (
                   <article
                     key={review.name}
-                    className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6"
+                    className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6 h-[235px] flex flex-col"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <StarRow />
@@ -284,8 +320,8 @@ export default function Reviews() {
                     <p className="text-text-light/85 leading-relaxed mb-4 italic">
                       &ldquo;{review.text}&rdquo;
                     </p>
-                    <p className="text-sm font-semibold text-white">
-                      {review.name}
+                    <p className="text-sm font-semibold text-white mt-auto">
+                      {formatReviewerName(review.name)}
                     </p>
                   </article>
                 ))}

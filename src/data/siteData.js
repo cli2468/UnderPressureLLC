@@ -10,7 +10,7 @@ export const business = {
     "Southwest Michigan",
   ],
   established: "4 years",
-  reviews: { count: 53, rating: 5, platforms: ["Google", "Facebook"] },
+  reviews: { count: 50, rating: 5, platforms: ["Google", "Facebook"] },
   credentials: ["Licensed", "Bonded", "Insured"],
   awards: ["NWI Life Spotlight Business of the Month"],
 }
@@ -116,7 +116,7 @@ export const differentiators = [
 ]
 
 export const stats = [
-  { value: "53+", label: "5-Star Reviews" },
+  { value: "50+", label: "5-Star Reviews" },
   { value: "100%", label: "Satisfaction Rate" },
   { value: "4+", label: "Years in Business" },
   { value: "3", label: "Regions Served" },

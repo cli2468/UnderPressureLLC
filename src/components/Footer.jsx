@@ -16,9 +16,9 @@ export default function Footer() {
               className="h-12 w-auto mb-4"
             />
             <p className="text-sm text-text-body leading-relaxed max-w-[38ch]">
-              A locally owned pressure washing company dedicated to restoring
-              the beauty of your home or business with reliable, professional
-              results.
+              Under Pressure Exterior Cleaning is dedicated to helping
+              homeowners and businesses maintain beautiful, well-maintained
+              properties with professional results you can see immediately.
             </p>
             {/* Social */}
             <div className="flex gap-3 mt-6">

@@ -14,6 +14,12 @@ import imgTownhouse from "../assets/images/before-after/AfterTownhouse.jpg"
 import imgApartment from "../assets/images/before-after/AfterApartment.jpg"
 import imgSideYard from "../assets/images/before-after/AfterSideYard.jpg"
 import imgGarage2 from "../assets/images/before-after/AfterGarageCleaning2.jpg"
+import beforeTownhouse from "../assets/images/before-after/BeforeTownhouse.jpg"
+import beforeConcrete from "../assets/images/before-after/BeforeConcrete.jpg"
+import beforeFence from "../assets/images/before-after/BeforeFence.jpg"
+import beforeSiding from "../assets/images/before-after/BeforeSiding.jpg"
+import beforeSideYard from "../assets/images/before-after/BeforeSideYard.jpg"
+import beforeGutters from "../assets/images/before-after/BeforeGutters.jpg"
 
 const imageMap = {
   "House Washing": imgHouse,
@@ -29,7 +35,103 @@ const imageMap = {
   "Property Management": imgGutters,
 }
 
+const beforeAfterMap = {
+  "House Washing": { before: beforeTownhouse, after: imgTownhouse, label: "House Washing" },
+  "Roof Cleaning": { before: beforeSideYard, after: imgSideYard, label: "Roof Cleaning" },
+  "Driveway & Concrete": { before: beforeConcrete, after: imgConcrete, label: "Driveway & Concrete" },
+  "Deck & Fence Cleaning": { before: beforeFence, after: imgFence, label: "Deck & Fence Cleaning" },
+  "Rust Removal": { before: beforeSiding, after: imgSiding, label: "Rust Removal" },
+  "Property Management": { before: beforeGutters, after: imgGutters, label: "Property Management" },
+}
+
 const spring = { type: "spring", stiffness: 100, damping: 20 }
+
+function MobileBeforeAfterSlider({ pair }) {
+  const [pos, setPos] = useState(50)
+  const [containerW, setContainerW] = useState(0)
+  const containerRef = useRef(null)
+  const dragging = useRef(false)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      setContainerW(entries[0].contentRect.width)
+    })
+    observer.observe(el)
+    setContainerW(el.offsetWidth)
+    return () => observer.disconnect()
+  }, [])
+
+  function updatePos(clientX) {
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const x = clientX - rect.left
+    const pct = Math.max(2, Math.min(98, (x / rect.width) * 100))
+    setPos(pct)
+  }
+
+  function onPointerDown(e) {
+    dragging.current = true
+    e.currentTarget.setPointerCapture(e.pointerId)
+    updatePos(e.clientX)
+  }
+
+  function onPointerMove(e) {
+    if (!dragging.current) return
+    updatePos(e.clientX)
+  }
+
+  function onPointerUp() {
+    dragging.current = false
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      className="relative h-[280px] rounded-2xl overflow-hidden cursor-ew-resize select-none touch-none mb-4"
+    >
+      <img
+        src={pair.after}
+        alt={`${pair.label} after`}
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        draggable={false}
+      />
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
+        <img
+          src={pair.before}
+          alt={`${pair.label} before`}
+          className="absolute top-0 left-0 h-full object-cover object-center"
+          style={{ width: containerW > 0 ? `${containerW}px` : "100vw", maxWidth: "none" }}
+          draggable={false}
+        />
+      </div>
+      <div
+        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+        style={{ left: `${pos}%`, transform: "translateX(-50%)" }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.25)] flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-brand-dark">
+            <path d="M5 3L2 8L5 13M11 3L14 8L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+      <div className="absolute bottom-4 left-4">
+        <span className="bg-white/90 backdrop-blur-sm text-text-primary font-semibold text-sm px-4 py-2 rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
+          Before
+        </span>
+      </div>
+      <div className="absolute bottom-4 right-4">
+        <span className="bg-accent/90 backdrop-blur-sm text-white font-semibold text-sm px-4 py-2 rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
+          After
+        </span>
+      </div>
+    </div>
+  )
+}
 
 /* ── Desktop card (carousel) ── */
 function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
@@ -98,6 +200,7 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
 /* ── Mobile accordion row with image ── */
 function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
   const isExpanded = expandedCard === `${tab}-${card.name}`
+  const beforeAfterPair = beforeAfterMap[card.name]
 
   return (
     <motion.div
@@ -132,13 +235,15 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            {imageMap[card.name] && (
+            {beforeAfterPair ? (
+              <MobileBeforeAfterSlider pair={beforeAfterPair} />
+            ) : imageMap[card.name] ? (
               <img
                 src={imageMap[card.name]}
                 alt={card.name}
-                className="w-full aspect-[16/9] object-cover rounded-xl mb-3"
+                className="w-full h-[280px] object-cover rounded-xl mb-4"
               />
-            )}
+            ) : null}
             <p className="pb-4 text-sm text-text-body leading-relaxed">
               {card.description}
             </p>
@@ -187,13 +292,11 @@ export default function Services() {
             transition={spring}
             className="text-center md:text-left"
           >
-            <div className="w-10 h-1 bg-accent rounded-full mx-auto md:mx-0 mb-4 md:hidden" />
+            <div className="w-10 h-1 bg-accent rounded-full mx-auto md:mx-0 mb-4" />
             <h2 className="font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase">
               <span className="md:hidden">Our Services</span>
               <span className="hidden md:inline">
-                Top-Rated Exterior Cleaning
-                <br />
-                Services That Deliver
+                Exterior Cleaning That Lasts
               </span>
             </h2>
           </motion.div>

@@ -20,7 +20,7 @@ const ourWay = [
 
 export default function WhyUs() {
   return (
-    <section id="about" className="py-24 bg-white">
+    <section id="about" className="py-24 bg-surface-mid/30 md:bg-white">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Mobile layout: heading, video, then content ── */}
         <div className="md:hidden mb-8 text-center">
@@ -65,6 +65,7 @@ export default function WhyUs() {
             className="flex flex-col justify-start"
           >
             {/* Desktop heading */}
+            <div className="hidden md:block w-10 h-1 bg-accent rounded-full mb-4" />
             <h2 className="hidden md:block font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-6">
               The Wrong Company Can
               <br />
@@ -76,7 +77,7 @@ export default function WhyUs() {
               that cost far more than the cleaning itself.
             </p>
             {/* Transition line — below intro copy on desktop */}
-            <p className="font-display text-xl md:text-base uppercase tracking-wider text-text-primary mt-4 md:mt-0 mb-6 md:mb-8">
+            <p className="font-display text-xl md:text-base uppercase tracking-tight text-text-primary mt-4 md:mt-0 mb-6 md:mb-8">
               — But at Under Pressure, we:
             </p>
 

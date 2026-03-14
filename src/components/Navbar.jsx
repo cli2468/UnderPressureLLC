@@ -6,8 +6,8 @@ import { business } from "../data/siteData"
 
 const navLinks = [
   { label: "Services", href: "#services" },
+  { label: "Why Us", href: "#about" },
   { label: "Reviews", href: "#reviews" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ]
 
@@ -46,13 +46,13 @@ export default function Navbar() {
             <img
               src={logo}
               alt={business.name}
-              className="h-12 md:h-14 w-auto object-contain"
+              className="h-12 md:h-[3.85rem] w-auto object-contain"
             />
-            <span className="flex flex-col justify-center leading-none pt-0.5">
-              <span className="block font-display text-[15px] md:text-[1.7rem] uppercase tracking-[0.01em] text-white md:leading-[0.92]">
+            <span className="flex flex-col justify-center leading-none pt-2 pl-0.5 -ml-1 md:pt-3 md:pl-0 md:ml-0">
+              <span className="block font-display text-[15px] md:text-[1.72rem] uppercase tracking-[0.015em] text-white leading-[0.94] md:leading-[0.9]">
                 Under Pressure
               </span>
-              <span className="block font-sans text-[10px] md:text-[0.82rem] font-medium uppercase tracking-[0.24em] text-text-light/75 mt-1.5 md:mt-2">
+              <span className="block font-sans text-[10px] md:text-[0.82rem] font-medium uppercase tracking-[0.16em] md:tracking-[0.2em] text-text-light/75 mt-1 md:mt-2">
                 Exterior Cleaning
               </span>
             </span>

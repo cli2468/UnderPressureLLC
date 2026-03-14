@@ -7,7 +7,7 @@ const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 export default function Hero() {
   return (
-    <section className="relative h-[100svh] min-h-[100svh] md:min-h-[100dvh] md:h-auto bg-brand-dark overflow-hidden">
+    <section className="relative h-[100svh] min-h-[100svh] md:min-h-[95dvh] lg:min-h-[94dvh] md:h-auto bg-brand-dark overflow-hidden">
       {/* Background image — full bleed, positioned higher on desktop */}
       <div className="absolute inset-0">
         <img
@@ -20,7 +20,7 @@ export default function Hero() {
       </div>
 
       {/* Content — left aligned */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[100dvh]">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[95dvh] lg:min-h-[94dvh]">
         <div className="max-w-xl py-16 md:py-0">
 
           <motion.h1
@@ -29,7 +29,7 @@ export default function Hero() {
             transition={{ ...spring, delay: 0.4 }}
             className="font-display text-5xl md:text-7xl tracking-tight text-white leading-none mb-6 uppercase"
           >
-            Exterior Cleaning<span className="text-accent-light">,</span>
+            Exterior Cleaning,
             <span className="block text-accent-light mt-2">Done Right.</span>
           </motion.h1>
 
@@ -70,8 +70,9 @@ export default function Hero() {
             transition={{ delay: 1.2 }}
             className="mt-12"
           >
-            <span className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-accent-light border border-accent/30 px-3 py-1.5 rounded-full leading-tight">
-              NWI Life in the Spotlight — Business of the Month
+            <span className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-widest border border-accent/30 px-3 py-1.5 rounded-full leading-tight">
+              <span className="text-accent-light">Business of the Month</span>
+              <span className="text-white"> - NWI Life in the Spotlight</span>
             </span>
           </motion.div>
         </div>
@@ -79,3 +80,5 @@ export default function Hero() {
     </section>
   )
 }
+
+

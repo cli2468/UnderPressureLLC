@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Warning, ShieldCheck, ArrowRight, FileText, X, Check } from "@phosphor-icons/react"
-import videoSrc from "../assets/images/gallery/Pressure Wash.mp4"
+import videoSrc from "../assets/images/gallery/Timelapse.mp4"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 

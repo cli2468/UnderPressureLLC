@@ -4,45 +4,65 @@ import { CaretLeft, CaretRight, CaretDown, ArrowUpRight } from "@phosphor-icons/
 import { services } from "../data/siteData"
 
 // Map service names to available "After" images
-import imgHouse from "../assets/images/before-after/AfterHouse.jpg"
-import imgConcrete from "../assets/images/before-after/AfterConcrete.jpg"
-import imgFence from "../assets/images/before-after/AfterFence.jpg"
-import imgSiding from "../assets/images/before-after/AfterSiding.jpg"
-import imgGutters from "../assets/images/before-after/AfterGutters.jpg"
-import imgGarage from "../assets/images/before-after/AfterGarageCleaning.jpg"
-import imgTownhouse from "../assets/images/before-after/AfterTownhouse.jpg"
-import imgApartment from "../assets/images/before-after/AfterApartment.jpg"
-import imgSideYard from "../assets/images/before-after/AfterSideYard.jpg"
-import imgGarage2 from "../assets/images/before-after/AfterGarageCleaning2.jpg"
-import beforeTownhouse from "../assets/images/before-after/BeforeTownhouse.jpg"
-import beforeConcrete from "../assets/images/before-after/BeforeConcrete.jpg"
-import beforeFence from "../assets/images/before-after/BeforeFence.jpg"
-import beforeSiding from "../assets/images/before-after/BeforeSiding.jpg"
-import beforeSideYard from "../assets/images/before-after/BeforeSideYard.jpg"
-import beforeGutters from "../assets/images/before-after/BeforeGutters.jpg"
+import imgConcrete from "../assets/images/before-after - mine/AfterConcrete.jpg"
+import imgSiding from "../assets/images/before-after - mine/AfterSiding.jpg"
+import imgGutters from "../assets/images/before-after - mine/AfterGutters.jpg"
+import imgGarage from "../assets/images/before-after - mine/AfterGarageCleaning.jpg"
+import imgGarage2 from "../assets/images/before-after - mine/AfterGarageCleaning2.jpg"
+import beforeGarage2 from "../assets/images/before-after - mine/BeforeGarageCleaning2.jpg"
+import beforeTownhouse from "../assets/images/before-after - mine/BeforeTownhouse.jpg"
+import beforeSiding from "../assets/images/before-after - mine/BeforeSiding.jpg"
+import churchPhoto from "../assets/images/gallery/church.jpg"
+import clientCommercialBuildingAfter from "../assets/images/CLIENT-before-after/Commercial Building After .jpg"
+import clientCommercialBuildingBefore from "../assets/images/CLIENT-before-after/Commercial Building Before .jpg"
+import clientConcreteBefore from "../assets/images/CLIENT-before-after/Concrete Before.jpg"
+import clientCommercialSidewalks from "../assets/images/CLIENT-before-after/Commercial Sidewalks .jpg"
+import clientConcreteAfter from "../assets/images/CLIENT-before-after/Concrete After .jpg"
+import clientConcreteSealing from "../assets/images/CLIENT-before-after/Concrete Sealing .png"
+import clientDeckAfter from "../assets/images/CLIENT-before-after/Deck After.jpg"
+import clientDeckBefore from "../assets/images/CLIENT-before-after/Deck Before .jpg"
+import clientHouseAfter from "../assets/images/CLIENT-before-after/House After .jpg"
+import clientHouseBefore from "../assets/images/CLIENT-before-after/House Before .jpg"
+import clientPaversAfter from "../assets/images/CLIENT-before-after/Pavers After.jpg"
+import clientPaverCleaningPicture from "../assets/images/CLIENT-before-after/Paver Cleaning Picture .jpg"
+import clientPaversBefore from "../assets/images/CLIENT-before-after/Pavers Before .jpg"
+import clientRoofAfter from "../assets/images/CLIENT-before-after/Roof After .JPG"
+import clientRoofBefore from "../assets/images/CLIENT-before-after/Roof Before .JPG"
 
 const imageMap = {
-  "House Washing": imgHouse,
-  "Roof Cleaning": imgTownhouse,
-  "Driveway & Concrete Cleaning": imgConcrete,
-  "Concrete Sealing": imgGarage,
-  "Decks & Fences": imgFence,
+  "House Washing": clientHouseAfter,
+  "Roof Cleaning": clientRoofAfter,
+  "Driveway & Concrete Cleaning": clientConcreteAfter,
+  "Concrete Sealing": clientConcreteSealing,
+  "Decks & Fences": clientDeckAfter,
   "Rust Removal": imgSiding,
-  "Paver Cleaning, Sanding & Sealing": imgSideYard,
-  "Buildings & Storefronts": imgApartment,
-  "Drive-Thrus & High Traffic Areas": imgConcrete,
+  "Paver Cleaning, Sanding & Sealing": clientPaversAfter,
+  "Buildings & Storefronts": clientCommercialBuildingAfter,
+  "Drive-Thrus & High Traffic Areas": clientCommercialSidewalks,
   "Parking Lots & Garages": imgGarage2,
   "Property Management": imgGutters,
-  "Schools, Retail Centers & Offices": imgApartment,
+  "Schools, Retail Centers & Offices": churchPhoto,
+}
+
+const imagePositionMap = {
+  "Drive-Thrus & High Traffic Areas": "center 62%",
 }
 
 const beforeAfterMap = {
-  "House Washing": { before: beforeTownhouse, after: imgTownhouse, label: "House Washing" },
-  "Roof Cleaning": { before: beforeSideYard, after: imgSideYard, label: "Roof Cleaning" },
-  "Driveway & Concrete Cleaning": { before: beforeConcrete, after: imgConcrete, label: "Driveway & Concrete Cleaning" },
-  "Decks & Fences": { before: beforeFence, after: imgFence, label: "Decks & Fences" },
+  "House Washing": { before: clientHouseBefore, after: clientHouseAfter, label: "House Washing" },
+  "Roof Cleaning": { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
+  "Driveway & Concrete Cleaning": {
+    before: clientConcreteBefore,
+    after: clientConcreteAfter,
+    label: "Driveway & Concrete Cleaning",
+    beforePosition: "center 62%",
+    afterPosition: "center 80%",
+  },
+  "Decks & Fences": { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
   "Rust Removal": { before: beforeSiding, after: imgSiding, label: "Rust Removal" },
-  "Property Management": { before: beforeGutters, after: imgGutters, label: "Property Management" },
+  "Paver Cleaning, Sanding & Sealing": { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
+  "Buildings & Storefronts": { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
+  "Parking Lots & Garages": { before: beforeGarage2, after: imgGarage2, label: "Parking Lots & Garages" },
 }
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
@@ -99,6 +119,7 @@ function MobileBeforeAfterSlider({ pair }) {
         src={pair.after}
         alt={`${pair.label} after`}
         className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ objectPosition: pair.afterPosition ?? "center" }}
         draggable={false}
       />
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
@@ -106,7 +127,11 @@ function MobileBeforeAfterSlider({ pair }) {
           src={pair.before}
           alt={`${pair.label} before`}
           className="absolute top-0 left-0 h-full object-cover object-center"
-          style={{ width: containerW > 0 ? `${containerW}px` : "100vw", maxWidth: "none" }}
+          style={{
+            width: containerW > 0 ? `${containerW}px` : "100vw",
+            maxWidth: "none",
+            objectPosition: pair.beforePosition ?? "center",
+          }}
           draggable={false}
         />
       </div>
@@ -153,6 +178,7 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
         src={imageMap[card.name]}
         alt={card.name}
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent transition-opacity duration-300 group-hover:from-brand-dark/80" />
 
@@ -170,11 +196,10 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
             <CaretDown
               size={18}
               weight="bold"
-              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${
-                isExpanded
-                  ? "rotate-180 opacity-100"
-                  : "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
-              }`}
+              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${isExpanded
+                ? "rotate-180 opacity-100"
+                : "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
+                }`}
             />
           </button>
           <AnimatePresence>
@@ -202,6 +227,7 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
 function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
   const isExpanded = expandedCard === `${tab}-${card.name}`
   const beforeAfterPair = beforeAfterMap[card.name]
+  const useStaticMobileImage = card.name === "Paver Cleaning, Sanding & Sealing"
 
   return (
     <motion.div
@@ -222,9 +248,8 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
         <CaretDown
           size={18}
           weight="bold"
-          className={`shrink-0 ml-3 text-text-primary transition-transform duration-300 ${
-            isExpanded ? "rotate-180" : ""
-          }`}
+          className={`shrink-0 ml-3 text-text-primary transition-transform duration-300 ${isExpanded ? "rotate-180" : ""
+            }`}
         />
       </button>
       <AnimatePresence>
@@ -236,13 +261,20 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            {beforeAfterPair ? (
+            {useStaticMobileImage ? (
+              <img
+                src={clientPaverCleaningPicture}
+                alt={card.name}
+                className="w-full h-[280px] object-cover rounded-xl mb-4"
+              />
+            ) : beforeAfterPair ? (
               <MobileBeforeAfterSlider pair={beforeAfterPair} />
             ) : imageMap[card.name] ? (
               <img
                 src={imageMap[card.name]}
                 alt={card.name}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
+                style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
               />
             ) : null}
             <p className="pb-4 text-sm text-text-body leading-relaxed">
@@ -360,11 +392,10 @@ export default function Services() {
             <button
               key={t}
               onClick={() => switchTab(t)}
-              className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${
-                tab === t
-                  ? "bg-brand-dark text-white shadow-[0_4px_20px_rgba(26,35,50,0.15)]"
-                  : "bg-surface text-text-body hover:bg-surface-mid border border-surface-mid"
-              }`}
+              className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${tab === t
+                ? "bg-brand-dark text-white shadow-[0_4px_20px_rgba(26,35,50,0.15)]"
+                : "bg-surface text-text-body hover:bg-surface-mid border border-surface-mid"
+                }`}
             >
               {t}
             </button>

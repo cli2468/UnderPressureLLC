@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Star,
-  CaretLeft,
-  CaretRight,
 } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import reviewPhoto from "../assets/images/services/UPWorker.jpg"
+import reviewPhoto from "../assets/images/services/Main.jpg"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
@@ -146,6 +144,7 @@ export default function Reviews() {
   const [desktopPage, setDesktopPage] = useState(0)
   const [mobileIdx, setMobileIdx] = useState(0)
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false)
+  const mobileTrackRef = useRef(null)
 
   const desktopPages = [
     [allReviews[0], allReviews[4], allReviews[8]],
@@ -168,12 +167,21 @@ export default function Reviews() {
     return () => clearInterval(timer)
   }, [desktopPages.length, isMobile])
 
-  function mobilePrev() {
-    setMobileIdx((current) => (current - 1 + allReviews.length) % allReviews.length)
+  function scrollToMobileReview(index) {
+    const track = mobileTrackRef.current
+    if (!track) return
+    const card = track.children[index]
+    if (!card) return
+    card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
   }
 
-  function mobileNext() {
-    setMobileIdx((current) => (current + 1) % allReviews.length)
+  function handleMobileScroll(e) {
+    const track = e.currentTarget
+    const card = track.querySelector("[data-mobile-review-card]")
+    if (!card) return
+    const step = card.getBoundingClientRect().width + 16
+    const nextIdx = Math.round(track.scrollLeft / step)
+    setMobileIdx(Math.max(0, Math.min(allReviews.length - 1, nextIdx)))
   }
 
   return (
@@ -217,41 +225,27 @@ export default function Reviews() {
             </div>
           </motion.div>
 
-          <div className="relative">
-            <button
-              onClick={mobilePrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
-              aria-label="Previous review"
+          <div>
+            <div
+              ref={mobileTrackRef}
+              onScroll={handleMobileScroll}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 -mx-6 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              <CaretLeft size={18} weight="bold" className="text-white" />
-            </button>
-            <button
-              onClick={mobileNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center active:scale-95 transition-transform"
-              aria-label="Next review"
-            >
-              <CaretRight size={18} weight="bold" className="text-white" />
-            </button>
-
-            <div className="mx-6 h-[320px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={mobileIdx}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.25 }}
+              {allReviews.map((review) => (
+                <div
+                  key={review.name}
+                  data-mobile-review-card
+                  className="snap-center shrink-0 w-[calc(100%-3rem)]"
                 >
-                  <MobileReviewCard review={allReviews[mobileIdx]} />
-                </motion.div>
-              </AnimatePresence>
+                  <MobileReviewCard review={review} />
+                </div>
+              ))}
             </div>
-
             <div className="flex justify-center gap-1.5 mt-6">
               {allReviews.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setMobileIdx(i)}
+                  onClick={() => scrollToMobileReview(i)}
                   aria-label={`Review ${i + 1}`}
                   className={`rounded-full transition-all duration-300 ${i === mobileIdx ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-white/20"
                     }`}

@@ -2,26 +2,26 @@ import { useState, useRef, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 // Before/After pairs
-import beforeTownhouse from "../assets/images/before-after/BeforeTownhouse.jpg"
-import afterTownhouse from "../assets/images/before-after/AfterTownhouse.jpg"
-import beforeConcrete from "../assets/images/before-after/BeforeConcrete.jpg"
-import afterConcrete from "../assets/images/before-after/AfterConcrete.jpg"
-import beforeFence from "../assets/images/before-after/BeforeFence.jpg"
-import afterFence from "../assets/images/before-after/AfterFence.jpg"
-import beforeSiding from "../assets/images/before-after/BeforeSiding.jpg"
-import afterSiding from "../assets/images/before-after/AfterSiding.jpg"
-import beforeSideYard from "../assets/images/before-after/BeforeSideYard.jpg"
-import afterSideYard from "../assets/images/before-after/AfterSideYard.jpg"
-import beforeGutters from "../assets/images/before-after/BeforeGutters.jpg"
-import afterGutters from "../assets/images/before-after/AfterGutters.jpg"
+import clientCommercialBuildingAfter from "../assets/images/CLIENT-before-after/Commercial Building After .jpg"
+import clientCommercialBuildingBefore from "../assets/images/CLIENT-before-after/Commercial Building Before .jpg"
+import clientConcreteBefore from "../assets/images/CLIENT-before-after/Concrete Before.jpg"
+import clientConcreteAfter from "../assets/images/CLIENT-before-after/Concrete After .jpg"
+import clientDeckAfter from "../assets/images/CLIENT-before-after/Deck After.jpg"
+import clientDeckBefore from "../assets/images/CLIENT-before-after/Deck Before .jpg"
+import clientHouseAfter from "../assets/images/CLIENT-before-after/House After .jpg"
+import clientHouseBefore from "../assets/images/CLIENT-before-after/House Before .jpg"
+import clientPaversAfter from "../assets/images/CLIENT-before-after/Pavers After.jpg"
+import clientPaversBefore from "../assets/images/CLIENT-before-after/Pavers Before .jpg"
+import clientRoofAfter from "../assets/images/CLIENT-before-after/Roof After .JPG"
+import clientRoofBefore from "../assets/images/CLIENT-before-after/Roof Before .JPG"
 
 const pairs = [
-  { before: beforeTownhouse, after: afterTownhouse, label: "House Washing" },
-  { before: beforeConcrete, after: afterConcrete, label: "Concrete Cleaning" },
-  { before: beforeFence, after: afterFence, label: "Fence Restoration" },
-  { before: beforeSiding, after: afterSiding, label: "Siding Cleaning" },
-  { before: beforeSideYard, after: afterSideYard, label: "Roof Cleaning" },
-  { before: beforeGutters, after: afterGutters, label: "Gutter Cleaning" },
+  { before: clientHouseBefore, after: clientHouseAfter, label: "House Washing" },
+  { before: clientConcreteBefore, after: clientConcreteAfter, label: "Driveway & Concrete Cleaning" },
+  { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
+  { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
+  { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
+  { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
 ]
 
 // Desktop: 2 per page. Mobile: 1 per page.
@@ -243,3 +243,4 @@ export default function BeforeAfter() {
     </section>
   )
 }
+

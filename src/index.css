@@ -40,23 +40,41 @@ body {
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-.animate-marquee {
-  animation: marquee linear infinite;
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee var(--marquee-duration, 14s) linear infinite;
 }
 
-.animate-marquee-speed {
-  animation-duration: 3s;
+.marquee-segment {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+.review-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .animate-marquee-speed {
-    animation-duration: 12s;
+  .review-text {
+    display: block;
+    overflow: visible;
   }
 }

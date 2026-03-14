@@ -39,15 +39,23 @@ export default function Navbar() {
             ? "bg-brand-dark/95 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
             : "bg-transparent"
         }`}
-      >
-        <div className="relative w-full px-6 md:px-12 lg:px-16 flex items-center justify-between h-16 md:h-20">
+        >
+        <div className="relative w-full px-5 md:px-12 lg:px-16 flex items-center justify-between h-20 md:h-24">
           {/* Logo — left */}
-          <a href="#" className="flex-shrink-0">
+          <a href="#" className="flex items-center gap-2.5 md:gap-3.5 flex-shrink-0">
             <img
               src={logo}
               alt={business.name}
-              className="h-10 md:h-14 w-auto"
+              className="h-12 md:h-14 w-auto object-contain"
             />
+            <span className="flex flex-col justify-center leading-none pt-0.5">
+              <span className="block font-display text-[15px] md:text-[1.7rem] uppercase tracking-[0.01em] text-white md:leading-[0.92]">
+                Under Pressure
+              </span>
+              <span className="block font-sans text-[10px] md:text-[0.82rem] font-medium uppercase tracking-[0.24em] text-text-light/75 mt-1.5 md:mt-2">
+                Exterior Cleaning
+              </span>
+            </span>
           </a>
 
           {/* Links — true center of viewport */}
@@ -81,10 +89,10 @@ export default function Navbar() {
           </div>
 
           {/* Mobile: phone + hamburger */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
             <a
               href={business.phoneHref}
-              className="flex items-center gap-1.5 bg-accent text-white text-sm font-semibold px-3 py-1.5 rounded-lg"
+              className="flex items-center gap-1.5 bg-accent text-white text-sm font-semibold px-3.5 py-2 rounded-xl"
             >
               <Phone size={14} weight="bold" />
               Call
@@ -110,13 +118,8 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-brand-dark md:hidden flex flex-col"
           >
-            {/* Top bar with logo + close */}
-            <div className="flex items-center justify-between px-6 h-16 shrink-0">
-              <img
-                src={logo}
-                alt={business.name}
-                className="h-10 w-auto"
-              />
+            {/* Top bar with close only */}
+            <div className="flex items-center justify-end px-6 h-20 shrink-0">
               <button
                 onClick={() => setMobileOpen(false)}
                 className="text-text-light p-2"

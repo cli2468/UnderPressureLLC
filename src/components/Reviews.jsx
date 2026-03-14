@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Star, GoogleLogo, FacebookLogo, CaretLeft, CaretRight } from "@phosphor-icons/react"
+import {
+  Star,
+  GoogleLogo,
+  FacebookLogo,
+  CaretLeft,
+  CaretRight,
+} from "@phosphor-icons/react"
 import { business } from "../data/siteData"
+import reviewLogo from "../assets/logos/UnderPressureLogo.png"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
@@ -53,42 +60,34 @@ const allReviews = [
   },
 ]
 
-// Desktop pages of 3
-const desktopPages = []
-for (let i = 0; i < allReviews.length; i += 3) {
-  desktopPages.push(allReviews.slice(i, i + 3))
-}
-
-function StarRow() {
+function StarRow({ size = 16 }) {
   return (
     <div className="flex gap-0.5">
       {[...Array(5)].map((_, i) => (
-        <Star key={i} size={16} weight="fill" className="text-yellow-400" />
+        <Star key={i} size={size} weight="fill" className="text-yellow-400" />
       ))}
     </div>
   )
 }
 
-function PlatformIcon({ platform }) {
+function PlatformIcon({ platform, size = 16 }) {
   if (platform === "google") {
-    return <GoogleLogo size={16} weight="bold" className="text-text-muted" />
+    return <GoogleLogo size={size} weight="bold" className="text-text-muted" />
   }
-  return <FacebookLogo size={16} weight="bold" className="text-text-muted" />
+  return <FacebookLogo size={size} weight="bold" className="text-text-muted" />
 }
 
-function ReviewCard({ review }) {
+function MobileReviewCard({ review }) {
   return (
-    <div className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6">
+    <div className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6 flex flex-col h-[320px]">
       <div className="flex items-center justify-between mb-4">
         <StarRow />
         <PlatformIcon platform={review.platform} />
       </div>
-      <p className="text-text-light/85 leading-relaxed mb-4 italic">
+      <p className="text-text-light/85 leading-relaxed mb-4 italic review-text">
         &ldquo;{review.text}&rdquo;
       </p>
-      <p className="text-sm font-semibold text-white">
-        {review.name}
-      </p>
+      <p className="text-sm font-semibold text-white mt-auto">{review.name}</p>
     </div>
   )
 }
@@ -96,37 +95,48 @@ function ReviewCard({ review }) {
 export default function Reviews() {
   const [desktopPage, setDesktopPage] = useState(0)
   const [mobileIdx, setMobileIdx] = useState(0)
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false)
 
-  // Desktop auto-cycle (pages of 3)
+  const desktopPages = []
+  for (let i = 0; i < allReviews.length; i += 3) {
+    desktopPages.push(allReviews.slice(i, i + 3))
+  }
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setDesktopPage((p) => (p + 1) % desktopPages.length)
-    }, 6000)
-    return () => clearInterval(timer)
+    const mq = window.matchMedia("(max-width: 767px)")
+    const onChange = (e) => setIsMobile(e.matches)
+    mq.addEventListener("change", onChange)
+    return () => mq.removeEventListener("change", onChange)
   }, [])
 
-  // Mobile auto-cycle (individual reviews)
   useEffect(() => {
+    if (isMobile) return
     const timer = setInterval(() => {
-      setMobileIdx((p) => (p + 1) % allReviews.length)
-    }, 5000)
+      setDesktopPage((current) => (current + 1) % desktopPages.length)
+    }, 7000)
     return () => clearInterval(timer)
-  }, [])
+  }, [desktopPages.length, isMobile])
 
   function mobilePrev() {
-    setMobileIdx((p) => (p - 1 + allReviews.length) % allReviews.length)
+    setMobileIdx((current) => (current - 1 + allReviews.length) % allReviews.length)
   }
+
   function mobileNext() {
-    setMobileIdx((p) => (p + 1) % allReviews.length)
+    setMobileIdx((current) => (current + 1) % allReviews.length)
+  }
+
+  function desktopPrev() {
+    setDesktopPage((current) => (current - 1 + desktopPages.length) % desktopPages.length)
+  }
+
+  function desktopNext() {
+    setDesktopPage((current) => (current + 1) % desktopPages.length)
   }
 
   return (
     <section id="reviews" className="py-24 bg-brand-dark">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-
-        {/* ── Mobile layout ── */}
         <div className="md:hidden">
-          {/* Mobile header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -134,6 +144,11 @@ export default function Reviews() {
             transition={spring}
             className="text-center mb-8"
           >
+            <img
+              src={reviewLogo}
+              alt={business.name}
+              className="h-20 w-auto mx-auto mb-5"
+            />
             <div className="flex justify-center gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={24} weight="fill" className="text-yellow-400" />
@@ -142,9 +157,7 @@ export default function Reviews() {
             <div className="font-display text-5xl text-white tracking-tight mb-1">
               {business.reviews.count}+
             </div>
-            <div className="text-text-muted text-base mb-4">
-              Five-Star Reviews
-            </div>
+            <div className="text-text-muted text-base mb-4">Five-Star Reviews</div>
             <div className="flex justify-center gap-4 items-center text-text-muted">
               <div className="flex items-center gap-1.5">
                 <GoogleLogo size={18} weight="bold" />
@@ -158,7 +171,6 @@ export default function Reviews() {
             </div>
           </motion.div>
 
-          {/* Mobile carousel — single card with nav buttons */}
           <div className="relative">
             <button
               onClick={mobilePrev}
@@ -175,7 +187,7 @@ export default function Reviews() {
               <CaretRight size={18} weight="bold" className="text-white" />
             </button>
 
-            <div className="mx-6 min-h-[260px]">
+            <div className="mx-6 h-[320px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={mobileIdx}
@@ -184,12 +196,11 @@ export default function Reviews() {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <ReviewCard review={allReviews[mobileIdx]} />
+                  <MobileReviewCard review={allReviews[mobileIdx]} />
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Progress dots */}
             <div className="flex justify-center gap-1.5 mt-6">
               {allReviews.map((_, i) => (
                 <button
@@ -197,9 +208,7 @@ export default function Reviews() {
                   onClick={() => setMobileIdx(i)}
                   aria-label={`Review ${i + 1}`}
                   className={`rounded-full transition-all duration-300 ${
-                    i === mobileIdx
-                      ? "w-6 h-2 bg-accent"
-                      : "w-2 h-2 bg-white/20"
+                    i === mobileIdx ? "w-6 h-2 bg-accent" : "w-2 h-2 bg-white/20"
                   }`}
                 />
               ))}
@@ -207,15 +216,13 @@ export default function Reviews() {
           </div>
         </div>
 
-        {/* ── Desktop layout (unchanged) ── */}
         <div className="hidden md:grid md:grid-cols-5 gap-12 items-start">
-          {/* Left — big number + stars */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={spring}
-            className="md:col-span-2 md:sticky md:top-32"
+            className="md:col-span-2 sticky top-32"
           >
             <div className="flex gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
@@ -225,9 +232,7 @@ export default function Reviews() {
             <div className="font-display text-8xl text-white tracking-tight mb-2">
               {business.reviews.count}+
             </div>
-            <div className="text-text-muted text-lg mb-6">
-              Five-Star Reviews
-            </div>
+            <div className="text-text-muted text-lg mb-8">Five-Star Reviews</div>
             <div className="flex gap-5 items-center text-text-muted mb-10">
               <div className="flex items-center gap-2">
                 <GoogleLogo size={22} weight="bold" />
@@ -239,10 +244,25 @@ export default function Reviews() {
                 <span className="text-sm font-medium">Facebook</span>
               </div>
             </div>
+            <div className="flex gap-3">
+              <button
+                onClick={desktopPrev}
+                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+                aria-label="Previous desktop review"
+              >
+                <CaretLeft size={18} weight="bold" />
+              </button>
+              <button
+                onClick={desktopNext}
+                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+                aria-label="Next desktop review"
+              >
+                <CaretRight size={18} weight="bold" />
+              </button>
+            </div>
           </motion.div>
 
-          {/* Right — review cards */}
-          <div className="md:col-span-3 min-h-[480px]">
+          <div className="md:col-span-3 min-h-[560px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={desktopPage}
@@ -253,13 +273,26 @@ export default function Reviews() {
                 className="space-y-5"
               >
                 {desktopPages[desktopPage].map((review) => (
-                  <ReviewCard key={review.name} review={review} />
+                  <article
+                    key={review.name}
+                    className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <StarRow />
+                      <PlatformIcon platform={review.platform} />
+                    </div>
+                    <p className="text-text-light/85 leading-relaxed mb-4 italic">
+                      &ldquo;{review.text}&rdquo;
+                    </p>
+                    <p className="text-sm font-semibold text-white">
+                      {review.name}
+                    </p>
+                  </article>
                 ))}
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
-
       </div>
     </section>
   )

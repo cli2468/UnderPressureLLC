@@ -30,7 +30,7 @@ export default function WhyUs() {
             <br />
             Can Cost You Thousands
           </h2>
-          <p className="text-text-body leading-relaxed mb-6">
+          <p className="text-text-body leading-relaxed">
             Most exterior cleaning companies blast surfaces with high pressure
             to get the job done fast. The result? Damaged property and repairs
             that cost far more than the cleaning itself.
@@ -66,16 +66,18 @@ export default function WhyUs() {
           >
             {/* Desktop heading */}
             <h2 className="hidden md:block font-display text-3xl md:text-5xl tracking-tight text-text-primary uppercase mb-6">
-              The Wrong Company
+              The Wrong Company Can
               <br />
-              Can Cost You
-              <br />
-              Thousands
+              Cost You Thousands
             </h2>
-            <p className="hidden md:block text-text-body leading-relaxed mb-8 max-w-[50ch]">
+            <p className="hidden md:block text-text-body leading-relaxed max-w-[50ch] mb-6">
               Most exterior cleaning companies blast surfaces with high pressure
               to get the job done fast. The result? Damaged property and repairs
               that cost far more than the cleaning itself.
+            </p>
+            {/* Transition line — below intro copy on desktop */}
+            <p className="font-display text-xl md:text-base uppercase tracking-wider text-text-primary mt-4 md:mt-0 mb-6 md:mb-8">
+              — But at Under Pressure, we:
             </p>
 
             {/* VS Comparison — stacked full-width cards */}
@@ -103,12 +105,12 @@ export default function WhyUs() {
               </div>
 
               {/* Other Companies — muted card */}
-              <div className="bg-surface border border-surface-mid rounded-2xl p-6">
+              <div className="bg-surface border-2 border-surface-mid rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
                     <Warning size={22} weight="duotone" className="text-red-400" />
                   </div>
-                  <h3 className="font-display text-base uppercase tracking-tight text-text-muted">
+                  <h3 className="font-display text-base uppercase tracking-tight text-text-primary">
                     Other Companies
                   </h3>
                 </div>
@@ -118,7 +120,7 @@ export default function WhyUs() {
                       <div className="w-5 h-5 bg-red-50 rounded-full flex items-center justify-center mt-0.5 shrink-0">
                         <X size={12} weight="bold" className="text-red-400" />
                       </div>
-                      <span className="text-sm text-text-muted leading-snug">{item}</span>
+                      <span className="text-sm text-text-primary font-medium leading-snug">{item}</span>
                     </li>
                   ))}
                 </ul>

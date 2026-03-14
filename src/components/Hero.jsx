@@ -7,7 +7,7 @@ const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 export default function Hero() {
   return (
-    <section className="relative h-[100dvh] md:min-h-[100dvh] md:h-auto bg-brand-dark overflow-hidden">
+    <section className="relative h-[100svh] min-h-[100svh] md:min-h-[100dvh] md:h-auto bg-brand-dark overflow-hidden">
       {/* Background image — full bleed, positioned higher on desktop */}
       <div className="absolute inset-0">
         <img

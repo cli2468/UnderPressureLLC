@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
-// Before/After pairs
+// Before/after pairs
 import clientCommercialBuildingAfter from "../assets/images/CLIENT-before-after/Commercial Building After .jpg"
 import clientCommercialBuildingBefore from "../assets/images/CLIENT-before-after/Commercial Building Before .jpg"
 import clientConcreteBefore from "../assets/images/CLIENT-before-after/Concrete Before.jpg"
@@ -17,16 +17,21 @@ import clientRoofBefore from "../assets/images/CLIENT-before-after/Roof Before .
 
 const pairs = [
   { before: clientHouseBefore, after: clientHouseAfter, label: "House Washing" },
-  { before: clientConcreteBefore, after: clientConcreteAfter, label: "Driveway & Concrete Cleaning" },
+  {
+    before: clientConcreteBefore,
+    after: clientConcreteAfter,
+    label: "Driveway & Concrete Cleaning",
+    afterPosition: "center 66%",
+  },
   { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
   { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
   { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
   { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
 ]
 
-// Desktop: 2 per page. Mobile: 1 per page.
 function useIsMobile() {
   const [mobile, setMobile] = useState(false)
+
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
     setMobile(mq.matches)
@@ -34,6 +39,7 @@ function useIsMobile() {
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
   }, [])
+
   return mobile
 }
 
@@ -48,8 +54,7 @@ function buildPages(isMobile) {
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
-// Individual interactive slider component
-function Slider({ before, after, label, onInteract }) {
+function Slider({ before, after, label, onInteract, beforePosition, afterPosition }) {
   const [pos, setPos] = useState(50)
   const [containerW, setContainerW] = useState(0)
   const containerRef = useRef(null)
@@ -98,29 +103,28 @@ function Slider({ before, after, label, onInteract }) {
       onPointerUp={onPointerUp}
       className="relative aspect-[5/4] rounded-2xl overflow-hidden cursor-ew-resize select-none touch-none"
     >
-      {/* After image (full) */}
       <img
         src={after}
-        alt={`${label} — after`}
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        alt={`${label} after`}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: afterPosition ?? "center" }}
         draggable={false}
       />
 
-      {/* Before image (clipped via overflow-hidden wrapper) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${pos}%` }}
-      >
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <img
           src={before}
-          alt={`${label} — before`}
-          className="absolute top-0 left-0 h-full object-cover object-center"
-          style={{ width: containerW > 0 ? `${containerW}px` : "100vw", maxWidth: "none" }}
+          alt={`${label} before`}
+          className="absolute top-0 left-0 h-full object-cover"
+          style={{
+            width: containerW > 0 ? `${containerW}px` : "100vw",
+            maxWidth: "none",
+            objectPosition: beforePosition ?? "center",
+          }}
           draggable={false}
         />
       </div>
 
-      {/* Slider line */}
       <div
         className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
         style={{ left: `${pos}%`, transform: "translateX(-50%)" }}
@@ -132,7 +136,6 @@ function Slider({ before, after, label, onInteract }) {
         </div>
       </div>
 
-      {/* Labels */}
       <div className="absolute bottom-5 left-5">
         <span className="bg-white/90 backdrop-blur-sm text-text-primary font-semibold text-sm px-5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
           Before
@@ -144,7 +147,6 @@ function Slider({ before, after, label, onInteract }) {
         </span>
       </div>
 
-      {/* Service label */}
       <div className="absolute top-5 left-5">
         <span className="bg-brand-dark/70 backdrop-blur-sm text-white font-semibold text-xs px-3 py-1.5 rounded-full">
           {label}
@@ -160,12 +162,10 @@ export default function BeforeAfter() {
   const [activePage, setActivePage] = useState(0)
   const pausedUntil = useRef(0)
 
-  // Reset page if pages array shrinks on resize
   useEffect(() => {
     if (activePage >= pages.length) setActivePage(0)
   }, [pages.length, activePage])
 
-  // Auto-scroll — pauses when user interacts with slider
   useEffect(() => {
     if (!isMobile) return
     const timer = setInterval(() => {
@@ -176,7 +176,6 @@ export default function BeforeAfter() {
   }, [isMobile, pages.length])
 
   function handleInteract() {
-    // Pause auto-scroll for 10 seconds after user touches slider
     pausedUntil.current = Date.now() + 10000
   }
 
@@ -185,7 +184,6 @@ export default function BeforeAfter() {
   return (
     <section id="case-studies" className="hidden md:block py-24 bg-surface-mid/30">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-        {/* Header — centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -199,7 +197,6 @@ export default function BeforeAfter() {
           </h2>
         </motion.div>
 
-        {/* Sliders */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activePage}
@@ -215,13 +212,14 @@ export default function BeforeAfter() {
                 before={pair.before}
                 after={pair.after}
                 label={pair.label}
+                beforePosition={pair.beforePosition}
+                afterPosition={pair.afterPosition}
                 onInteract={handleInteract}
               />
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* Pagination dots */}
         <div className="flex justify-center gap-2.5 mt-10">
           {pages.map((_, i) => (
             <button
@@ -243,4 +241,3 @@ export default function BeforeAfter() {
     </section>
   )
 }
-

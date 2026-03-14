@@ -10,8 +10,12 @@ import clientDeckAfter from "../assets/images/CLIENT-before-after/Deck After.jpg
 import clientDeckBefore from "../assets/images/CLIENT-before-after/Deck Before .jpg"
 import clientHouseAfter from "../assets/images/CLIENT-before-after/House After .jpg"
 import clientHouseBefore from "../assets/images/CLIENT-before-after/House Before .jpg"
+import garageAfter from "../assets/images/before-after - mine/AfterGarageCleaning2.jpg"
+import garageBefore from "../assets/images/before-after - mine/BeforeGarageCleaning2.jpg"
 import clientPaversAfter from "../assets/images/CLIENT-before-after/Pavers After.jpg"
 import clientPaversBefore from "../assets/images/CLIENT-before-after/Pavers Before .jpg"
+import clientPropertyManagementAfter from "../assets/images/CLIENT-before-after/Property Management After.jpg"
+import clientPropertyManagementBefore from "../assets/images/CLIENT-before-after/Property Management Before .jpg"
 import clientRoofAfter from "../assets/images/CLIENT-before-after/Roof After .JPG"
 import clientRoofBefore from "../assets/images/CLIENT-before-after/Roof Before .JPG"
 
@@ -26,6 +30,8 @@ const pairs = [
   { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
   { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
   { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
+  { before: clientPropertyManagementBefore, after: clientPropertyManagementAfter, label: "Property Management" },
+  { before: garageBefore, after: garageAfter, label: "Parking Lots & Garages" },
   { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
 ]
 

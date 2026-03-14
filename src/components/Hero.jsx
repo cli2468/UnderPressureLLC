@@ -21,13 +21,13 @@ export default function Hero() {
 
       {/* Content — left aligned */}
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[95dvh] lg:min-h-[94dvh]">
-        <div className="max-w-xl py-16 md:py-0">
+        <div className="max-w-xl pt-28 pb-12 md:py-0">
 
           <motion.h1
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ ...spring, delay: 0.4 }}
-            className="font-display text-5xl md:text-7xl tracking-tight text-white leading-none mb-6 uppercase"
+            className="font-display text-[4.2rem] md:text-7xl tracking-tight text-white leading-[0.9] mb-6 uppercase"
           >
             Exterior Cleaning,
             <span className="block text-accent-light mt-2">Done Right.</span>
@@ -70,7 +70,7 @@ export default function Hero() {
             transition={{ delay: 1.2 }}
             className="mt-12"
           >
-            <span className="inline-block text-[10px] sm:text-xs font-semibold uppercase tracking-widest border border-accent/30 px-3 py-1.5 rounded-full leading-tight">
+            <span className="inline-flex items-center max-w-full whitespace-nowrap text-[9px] min-[390px]:text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-widest border border-accent/30 px-3 py-1.5 rounded-full leading-tight">
               <span className="text-accent-light">Business of the Month</span>
               <span className="text-white"> - NWI Life in the Spotlight</span>
             </span>

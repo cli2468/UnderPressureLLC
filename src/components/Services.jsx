@@ -26,6 +26,8 @@ import clientHouseBefore from "../assets/images/CLIENT-before-after/House Before
 import clientPaversAfter from "../assets/images/CLIENT-before-after/Pavers After.jpg"
 import clientPaverCleaningPicture from "../assets/images/CLIENT-before-after/Paver Cleaning Picture .jpg"
 import clientPaversBefore from "../assets/images/CLIENT-before-after/Pavers Before .jpg"
+import clientPropertyManagementAfter from "../assets/images/CLIENT-before-after/Property Management After.jpg"
+import clientPropertyManagementBefore from "../assets/images/CLIENT-before-after/Property Management Before .jpg"
 import clientRoofAfter from "../assets/images/CLIENT-before-after/Roof After .JPG"
 import clientRoofBefore from "../assets/images/CLIENT-before-after/Roof Before .JPG"
 
@@ -40,7 +42,7 @@ const imageMap = {
   "Buildings & Storefronts": clientCommercialBuildingAfter,
   "Drive-Thrus & High Traffic Areas": clientCommercialSidewalks,
   "Parking Lots & Garages": imgGarage2,
-  "Property Management": imgGutters,
+  "Property Management": clientPropertyManagementAfter,
   "Schools, Retail Centers & Offices": churchPhoto,
 }
 
@@ -63,6 +65,11 @@ const beforeAfterMap = {
   "Paver Cleaning, Sanding & Sealing": { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
   "Buildings & Storefronts": { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
   "Parking Lots & Garages": { before: beforeGarage2, after: imgGarage2, label: "Parking Lots & Garages" },
+  "Property Management": {
+    before: clientPropertyManagementBefore,
+    after: clientPropertyManagementAfter,
+    label: "Property Management",
+  },
 }
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }

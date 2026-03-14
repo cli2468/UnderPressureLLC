@@ -68,7 +68,7 @@ export default function Contact() {
       </div>
 
       <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-5 gap-6 md:gap-10 lg:gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -82,7 +82,7 @@ export default function Contact() {
                 Get Your Free Estimate
               </h2>
               <p className="text-text-body leading-relaxed max-w-[45ch]">
-                Under Pressure Exterior Cleaning responds quickly with a clear quote and a realistic timeline.
+                Under Pressure Exterior Cleaning provides fast responses, clear and detailed quotes, and realistic scheduling timelines. Our team is always available to answer any questions, explain our process, and ensure you have complete confidence before moving forward with your project.
               </p>
             </div>
 

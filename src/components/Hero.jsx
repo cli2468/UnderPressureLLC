@@ -39,7 +39,7 @@ export default function Hero() {
             transition={{ ...spring, delay: 0.6 }}
             className="text-base md:text-lg text-text-light/70 leading-relaxed max-w-[44ch] mb-10"
           >
-            Professional soft washing for homes and businesses across Northwest Indiana. Results you can see.
+            Your trusted choice for professional pressure washing and soft washing. We safely restore homes and businesses with industry-leading equipment and results you can see instantly.
           </motion.p>
 
           <motion.div

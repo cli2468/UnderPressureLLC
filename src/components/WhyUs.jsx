@@ -5,10 +5,10 @@ import videoSrc from "../assets/images/gallery/Pressure Wash.mp4"
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 const theirWay = [
-  "High-pressure blasting that cracks concrete",
-  "Strips paint and damages siding",
-  "Voids manufacturer warranties on roofing",
-  "Forces water behind siding, causing mold",
+  "May rely on excessive pressure and improper techniques that can etch and permanently damage concrete surfaces.",
+  "May use high-pressure methods on siding that can strip paint or damage exterior materials.",
+  "May apply incorrect cleaning methods on roofing that may void manufacturer warranties and shorten the roof's lifespan.",
+  "May force water behind siding and trim, increasing the risk of moisture intrusion, mold, and long-term structural damage.",
 ]
 
 const ourWay = [
@@ -31,9 +31,7 @@ export default function WhyUs() {
             Can Cost You Thousands
           </h2>
           <p className="text-text-body leading-relaxed">
-            Most exterior cleaning companies blast surfaces with high pressure
-            to get the job done fast. The result? Damaged property and repairs
-            that cost far more than the cleaning itself.
+            Many exterior cleaning companies may rely on improper techniques, poor training, and excessive pressure to complete jobs quickly. The result? Damaged siding, etched concrete, and costly repairs that can far exceed the price of the cleaning itself.
           </p>
         </div>
 
@@ -72,9 +70,7 @@ export default function WhyUs() {
               Cost You Thousands
             </h2>
             <p className="hidden md:block text-text-body leading-relaxed max-w-[50ch] mb-6">
-              Most exterior cleaning companies blast surfaces with high pressure
-              to get the job done fast. The result? Damaged property and repairs
-              that cost far more than the cleaning itself.
+              Many exterior cleaning companies may rely on improper techniques, poor training, and excessive pressure to complete jobs quickly. The result? Damaged siding, etched concrete, and costly repairs that can far exceed the price of the cleaning itself.
             </p>
             {/* Transition line — below intro copy on desktop */}
             <p className="font-display text-xl md:text-base uppercase tracking-tight text-text-primary mt-4 md:mt-0 mb-6 md:mb-8">

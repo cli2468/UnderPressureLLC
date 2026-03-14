@@ -24,22 +24,23 @@ import beforeGutters from "../assets/images/before-after/BeforeGutters.jpg"
 const imageMap = {
   "House Washing": imgHouse,
   "Roof Cleaning": imgTownhouse,
-  "Driveway & Concrete": imgConcrete,
+  "Driveway & Concrete Cleaning": imgConcrete,
   "Concrete Sealing": imgGarage,
-  "Deck & Fence Cleaning": imgFence,
+  "Decks & Fences": imgFence,
   "Rust Removal": imgSiding,
-  "Paver Cleaning & Sanding": imgSideYard,
-  "Building & Storefront Washing": imgApartment,
-  "Sidewalks & Drive-Thrus": imgConcrete,
+  "Paver Cleaning, Sanding & Sealing": imgSideYard,
+  "Buildings & Storefronts": imgApartment,
+  "Drive-Thrus & High Traffic Areas": imgConcrete,
   "Parking Lots & Garages": imgGarage2,
   "Property Management": imgGutters,
+  "Schools, Retail Centers & Offices": imgApartment,
 }
 
 const beforeAfterMap = {
   "House Washing": { before: beforeTownhouse, after: imgTownhouse, label: "House Washing" },
   "Roof Cleaning": { before: beforeSideYard, after: imgSideYard, label: "Roof Cleaning" },
-  "Driveway & Concrete": { before: beforeConcrete, after: imgConcrete, label: "Driveway & Concrete" },
-  "Deck & Fence Cleaning": { before: beforeFence, after: imgFence, label: "Deck & Fence Cleaning" },
+  "Driveway & Concrete Cleaning": { before: beforeConcrete, after: imgConcrete, label: "Driveway & Concrete Cleaning" },
+  "Decks & Fences": { before: beforeFence, after: imgFence, label: "Decks & Fences" },
   "Rust Removal": { before: beforeSiding, after: imgSiding, label: "Rust Removal" },
   "Property Management": { before: beforeGutters, after: imgGutters, label: "Property Management" },
 }
@@ -266,10 +267,19 @@ export default function Services() {
   const cards = tab === "residential" ? services.residential : services.commercial
   const [expandedCard, setExpandedCard] = useState(`residential-${services.residential[1].name}`)
   const scrollRef = useRef(null)
+  const tabSwitchTimeoutRef = useRef(null)
 
   // Set correct default based on screen size after mount
   useEffect(() => {
     setExpandedCard(getDefaultExpanded("residential"))
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (tabSwitchTimeoutRef.current) {
+        clearTimeout(tabSwitchTimeoutRef.current)
+      }
+    }
   }, [])
 
   function scroll(dir) {
@@ -278,6 +288,32 @@ export default function Services() {
     const cardWidth = el.querySelector("[data-card]")?.offsetWidth || 300
     const gap = 20
     el.scrollBy({ left: dir * (cardWidth + gap), behavior: "smooth" })
+  }
+
+  function switchTab(nextTab) {
+    if (nextTab === tab) return
+
+    const nextCards = nextTab === "residential" ? services.residential : services.commercial
+    const defaultIndex = window.matchMedia("(max-width: 767px)").matches ? 0 : 1
+    const nextExpanded = `${nextTab}-${nextCards[defaultIndex].name}`
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches
+
+    if (tabSwitchTimeoutRef.current) {
+      clearTimeout(tabSwitchTimeoutRef.current)
+    }
+
+    setTab(nextTab)
+    scrollRef.current?.scrollTo({ left: 0, behavior: "auto" })
+
+    if (isDesktop) {
+      setExpandedCard(null)
+      tabSwitchTimeoutRef.current = setTimeout(() => {
+        setExpandedCard(nextExpanded)
+      }, 220)
+      return
+    }
+
+    setExpandedCard(nextExpanded)
   }
 
   return (
@@ -323,11 +359,7 @@ export default function Services() {
           {["residential", "commercial"].map((t) => (
             <button
               key={t}
-              onClick={() => {
-                setTab(t)
-                const middleCard = t === "residential" ? services.residential[1] : services.commercial[1]
-                setExpandedCard(`${t}-${middleCard.name}`)
-              }}
+              onClick={() => switchTab(t)}
               className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${
                 tab === t
                   ? "bg-brand-dark text-white shadow-[0_4px_20px_rgba(26,35,50,0.15)]"

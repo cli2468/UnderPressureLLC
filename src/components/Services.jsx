@@ -73,6 +73,7 @@ const beforeAfterMap = {
 }
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
+const easeOut = [0.23, 1, 0.32, 1]
 
 function MobileBeforeAfterSlider({ pair }) {
   const [pos, setPos] = useState(50)
@@ -124,7 +125,7 @@ function MobileBeforeAfterSlider({ pair }) {
     >
       <img
         src={pair.after}
-        alt={`${pair.label} after`}
+        alt={`${pair.label} after cleaning by Under Pressure Exterior Cleaning`}
         className="absolute inset-0 w-full h-full object-cover object-center"
         style={{ objectPosition: pair.afterPosition ?? "center" }}
         draggable={false}
@@ -132,7 +133,7 @@ function MobileBeforeAfterSlider({ pair }) {
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <img
           src={pair.before}
-          alt={`${pair.label} before`}
+          alt={`${pair.label} before cleaning`}
           className="absolute top-0 left-0 h-full object-cover object-center"
           style={{
             width: containerW > 0 ? `${containerW}px` : "100vw",
@@ -183,7 +184,7 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
     >
       <img
         src={imageMap[card.name]}
-        alt={card.name}
+        alt={`${card.name} result by Under Pressure Exterior Cleaning`}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
       />
@@ -203,19 +204,26 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
             <CaretDown
               size={18}
               weight="bold"
-              className={`shrink-0 ml-2 transition-all duration-300 text-text-primary ${isExpanded
+              className={`shrink-0 ml-2 text-text-primary transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${isExpanded
                 ? "rotate-180 opacity-100"
                 : "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
                 }`}
             />
           </button>
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {isExpanded && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
+                animate={{
+                  height: "auto",
+                  opacity: 1,
+                  transition: { duration: 0.24, ease: easeOut },
+                }}
+                exit={{
+                  height: 0,
+                  opacity: 0,
+                  transition: { duration: 0.18, ease: easeOut },
+                }}
                 className="overflow-hidden"
               >
                 <p className="px-5 pb-4 text-sm text-text-body leading-relaxed">
@@ -259,19 +267,26 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
             }`}
         />
       </button>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
+            animate={{
+              height: "auto",
+              opacity: 1,
+              transition: { duration: 0.24, ease: easeOut },
+            }}
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: { duration: 0.18, ease: easeOut },
+            }}
             className="overflow-hidden"
           >
             {useStaticMobileImage ? (
               <img
                 src={clientPaverCleaningPicture}
-                alt={card.name}
+                alt={`${card.name} result by Under Pressure Exterior Cleaning`}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
               />
             ) : beforeAfterPair ? (
@@ -279,7 +294,7 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
             ) : imageMap[card.name] ? (
               <img
                 src={imageMap[card.name]}
-                alt={card.name}
+                alt={`${card.name} result by Under Pressure Exterior Cleaning`}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
                 style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
               />
@@ -385,7 +400,7 @@ export default function Services() {
           >
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-5 py-2.5 rounded-full text-sm hover:bg-accent-light hover:text-brand-dark transition-all duration-200 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent-light hover:text-brand-dark active:scale-[0.98]"
             >
               Get a Free Estimate
               <ArrowUpRight size={16} weight="bold" />
@@ -399,7 +414,7 @@ export default function Services() {
             <button
               key={t}
               onClick={() => switchTab(t)}
-              className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-all duration-200 ${tab === t
+              className={`px-6 py-2.5 rounded-full font-semibold text-sm capitalize transition-[background-color,color,border-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${tab === t
                 ? "bg-brand-dark text-white shadow-[0_4px_20px_rgba(26,35,50,0.15)]"
                 : "bg-surface text-text-body hover:bg-surface-mid border border-surface-mid"
                 }`}
@@ -414,7 +429,7 @@ export default function Services() {
       <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 hidden md:block">
         <button
           onClick={() => scroll(-1)}
-          className="flex absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
+          className="flex absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center transition-[background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           aria-label="Scroll left"
         >
           <CaretLeft size={22} className="text-text-primary" weight="bold" />
@@ -422,7 +437,7 @@ export default function Services() {
 
         <button
           onClick={() => scroll(1)}
-          className="flex absolute right-0 lg:right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all"
+          className="flex absolute right-0 lg:right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center justify-center transition-[background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           aria-label="Scroll right"
         >
           <CaretRight size={22} className="text-text-primary" weight="bold" />
@@ -465,7 +480,7 @@ export default function Services() {
         <div className="mt-8 text-center">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full text-sm hover:bg-accent-light hover:text-brand-dark transition-all duration-200 active:scale-[0.98]"
+            className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full text-sm transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent-light hover:text-brand-dark active:scale-[0.98]"
           >
             Get a Free Estimate
             <ArrowUpRight size={16} weight="bold" />

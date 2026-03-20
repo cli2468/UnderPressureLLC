@@ -145,7 +145,7 @@ export default function Contact() {
                   <form onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
                     {formFields.map((field) => {
                       const base =
-                        "w-full px-4 py-3.5 rounded-xl border border-surface-mid bg-white focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent text-text-primary transition-all duration-200"
+                        "w-full px-4 py-3.5 rounded-xl border border-surface-mid bg-white focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent text-text-primary transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"
 
                       if (field.type === "select") {
                         return (
@@ -195,7 +195,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={sending}
-                      className="md:col-span-2 w-full bg-accent hover:bg-accent-light text-white hover:text-brand-dark font-bold py-4 rounded-xl transition-all duration-200 disabled:opacity-50 text-lg active:scale-[0.98]"
+                      className="md:col-span-2 w-full bg-accent hover:bg-accent-light text-white hover:text-brand-dark font-bold py-4 rounded-xl transition-[background-color,color,transform,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] disabled:opacity-50 text-lg active:scale-[0.98]"
                     >
                       {sending ? "Sending..." : "Request Free Estimate"}
                     </button>

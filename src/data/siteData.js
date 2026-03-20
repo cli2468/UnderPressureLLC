@@ -4,13 +4,22 @@ export const business = {
   tagline: "Elevating the standard of exterior cleaning.",
   phone: "219-307-1207",
   phoneHref: "tel:2193071207",
+  socialLinks: {
+    facebook: "https://www.facebook.com/p/Under-Pressure-Exterior-Cleaning-100064698066523/",
+    instagram: "https://www.instagram.com/_underpressure_llc_/",
+  },
   serviceArea: [
     "Northwest Indiana",
     "North Central Indiana",
     "Southwest Michigan",
   ],
   established: "4 years",
-  reviews: { count: 50, rating: 5, platforms: ["Google", "Facebook"] },
+  reviews: {
+    displayCount: "100+",
+    exactCount: 53,
+    rating: 5,
+    platforms: ["Google", "Facebook"],
+  },
   credentials: ["Licensed", "Bonded", "Insured"],
   awards: ["NWI Life Spotlight Business of the Month"],
 }

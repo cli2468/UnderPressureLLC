@@ -111,7 +111,7 @@ function Slider({ before, after, label, onInteract, beforePosition, afterPositio
     >
       <img
         src={after}
-        alt={`${label} after`}
+        alt={`${label} after cleaning by Under Pressure Exterior Cleaning`}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: afterPosition ?? "center" }}
         draggable={false}
@@ -120,7 +120,7 @@ function Slider({ before, after, label, onInteract, beforePosition, afterPositio
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <img
           src={before}
-          alt={`${label} before`}
+          alt={`${label} before cleaning`}
           className="absolute top-0 left-0 h-full object-cover"
           style={{
             width: containerW > 0 ? `${containerW}px` : "100vw",

@@ -50,6 +50,7 @@ export default function WhyUs() {
               loop
               muted
               playsInline
+              aria-label="Timelapse of Under Pressure Exterior Cleaning soft washing a home exterior"
               className="w-full h-full object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] md:absolute md:inset-0"
             />
           </motion.div>

@@ -209,7 +209,7 @@ export default function Reviews() {
               ))}
             </div>
             <div className="font-display text-5xl text-white tracking-tight text-center mb-1">
-              {business.reviews.count}+
+              {business.reviews.displayCount}
             </div>
             <div className="text-text-muted text-base text-center mb-4">Five-Star Reviews</div>
             <div className="flex justify-center gap-4 items-center text-text-muted">
@@ -276,7 +276,7 @@ export default function Reviews() {
               ))}
             </div>
             <div className="font-display text-8xl text-white tracking-tight mb-2">
-              {business.reviews.count}+
+              {business.reviews.displayCount}
             </div>
             <div className="text-text-muted text-lg mb-8">Five-Star Reviews</div>
             <div className="flex gap-5 items-center text-text-muted mb-10">

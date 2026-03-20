@@ -52,7 +52,7 @@ export default function Navbar() {
               <span className="block font-display text-[14px] md:text-[1.72rem] uppercase tracking-[0.01em] text-white leading-[0.94] md:leading-[0.9] whitespace-nowrap">
                 Under Pressure
               </span>
-              <span className="block font-sans text-[9px] md:text-[0.82rem] font-medium uppercase tracking-[0.12em] md:tracking-[0.2em] text-text-light/75 mt-1 md:mt-2 whitespace-nowrap">
+              <span className="block font-sans text-[9px] md:text-[0.82rem] font-medium uppercase tracking-[0.12em] md:tracking-[0.2em] text-white/88 mt-1 md:mt-2 whitespace-nowrap">
                 Exterior Cleaning
               </span>
             </span>
@@ -64,7 +64,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium tracking-wide text-text-light/80 hover:text-accent-light transition-colors duration-200"
+                className="text-sm font-medium tracking-wide text-white/88 hover:text-accent-light transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -75,7 +75,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <a
               href={business.phoneHref}
-              className="flex items-center gap-2 text-sm font-medium text-text-light/80 hover:text-accent-light transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-white/88 hover:text-accent-light transition-colors"
             >
               <Phone size={18} weight="bold" />
               {business.phone}

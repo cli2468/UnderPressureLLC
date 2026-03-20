@@ -21,7 +21,7 @@ export default function Hero() {
 
       {/* Content — left aligned */}
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[95dvh] lg:min-h-[94dvh]">
-        <div className="max-w-xl pt-28 pb-12 md:py-0">
+        <div className="max-w-xl pt-28 pb-12 md:py-0 lg:pt-24 xl:pt-28">
 
           <motion.h1
             initial={{ opacity: 0, x: -40 }}
@@ -37,7 +37,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ ...spring, delay: 0.6 }}
-            className="text-base md:text-lg text-text-light/70 leading-relaxed max-w-[44ch] mb-10"
+            className="text-base md:text-lg text-white/88 leading-relaxed max-w-[44ch] mb-10 drop-shadow-[0_1px_10px_rgba(0,0,0,0.4)]"
           >
             Your trusted choice for professional pressure washing and soft washing. We safely restore homes and businesses with industry-leading equipment and results you can see instantly.
           </motion.p>
@@ -50,14 +50,14 @@ export default function Hero() {
           >
             <a
               href={business.phoneHref}
-              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white hover:text-brand-dark font-bold px-8 py-4 rounded-xl text-lg transition-all duration-200 shadow-[0_8px_30px_rgba(8,145,178,0.3)] active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white hover:text-brand-dark font-bold px-8 py-4 rounded-xl text-lg shadow-[0_8px_30px_rgba(8,145,178,0.3)] transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
             >
               <Phone size={22} weight="bold" />
               Call {business.phone}
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white/20 hover:border-accent/50 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-200 active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white/20 hover:border-accent/50 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-[border-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
             >
               Free Estimate
               <ArrowRight size={20} weight="bold" />

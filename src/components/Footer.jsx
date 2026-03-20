@@ -1,8 +1,11 @@
-import { Phone, MapPin, FacebookLogo, InstagramLogo, TiktokLogo } from "@phosphor-icons/react"
+import { Phone, MapPin, FacebookLogo, InstagramLogo } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
 import logo from "../assets/logos/UnderPressureLogo - Transparent.png"
 
 export default function Footer() {
+  const socialIconClassName =
+    "w-9 h-9 rounded-full bg-text-body/10 flex items-center justify-center text-text-body transition-colors"
+
   return (
     <footer className="bg-surface border-t border-surface-mid">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 pt-16 pb-6">
@@ -23,25 +26,22 @@ export default function Footer() {
             {/* Social */}
             <div className="flex gap-3 mt-6">
               <a
-                href="#"
-                className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white hover:bg-accent-light hover:text-brand-dark transition-colors"
+                href={business.socialLinks.facebook}
+                target="_blank"
+                rel="noreferrer"
+                className={`${socialIconClassName} hover:bg-accent hover:text-white`}
                 aria-label="Facebook"
               >
                 <FacebookLogo size={18} weight="bold" />
               </a>
               <a
-                href="#"
-                className="w-9 h-9 rounded-full bg-text-body/10 flex items-center justify-center text-text-body hover:bg-accent hover:text-white transition-colors"
+                href={business.socialLinks.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className={`${socialIconClassName} hover:bg-accent hover:text-white`}
                 aria-label="Instagram"
               >
                 <InstagramLogo size={18} weight="bold" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 rounded-full bg-text-body/10 flex items-center justify-center text-text-body hover:bg-accent hover:text-white transition-colors"
-                aria-label="TikTok"
-              >
-                <TiktokLogo size={18} weight="bold" />
               </a>
             </div>
           </div>
@@ -55,14 +55,14 @@ export default function Footer() {
               {[
                 { label: "Home", href: "#" },
                 { label: "Services", href: "#services" },
-                { label: "Case Studies", href: "#case-studies" },
+                { label: "Case Studies", href: "#case-studies", className: "hidden md:block" },
                 { label: "Reviews", href: "#reviews" },
                 { label: "Contact Us", href: "#contact" },
               ].map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="block text-sm text-text-body hover:text-accent transition-colors"
+                  className={`block text-sm text-text-body hover:text-accent transition-colors ${link.className ?? ""}`}
                 >
                   {link.label}
                 </a>

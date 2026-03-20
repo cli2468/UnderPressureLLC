@@ -15,7 +15,7 @@ export const business = {
   ],
   established: "4 years",
   reviews: {
-    displayCount: "100+",
+    displayCount: "50+",
     exactCount: 53,
     rating: 5,
     platforms: ["Google", "Facebook"],

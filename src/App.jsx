@@ -21,8 +21,8 @@ function App() {
       <BeforeAfter />
       <WhyUs />
       <Reviews />
-      <FAQ />
       <Contact />
+      <FAQ />
       <Footer />
     </>
   )

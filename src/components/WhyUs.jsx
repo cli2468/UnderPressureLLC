@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Warning, ShieldCheck, ArrowRight, FileText, X, Check, Phone } from "@phosphor-icons/react"
-import videoSrc from "../assets/images/gallery/Timelapse.mp4"
+import videoPoster from "../assets/images/gallery/Timelapse-poster.jpg"
+import videoSrc from "../assets/images/gallery/Timelapse-optimized.mp4"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
@@ -82,6 +83,7 @@ const ourWay = [
 
 export default function WhyUs() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
 
   return (
     <>
@@ -109,15 +111,26 @@ export default function WhyUs() {
             transition={spring}
             className="relative h-full min-h-[400px] md:min-h-0"
           >
-            <video
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-label="Timelapse of Under Pressure Exterior Cleaning soft washing a home exterior"
-              className="w-full h-full object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] md:absolute md:inset-0"
-            />
+            {videoFailed ? (
+              <img
+                src={videoPoster}
+                alt="Under Pressure Exterior Cleaning soft washing a home exterior"
+                className="w-full h-full object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] md:absolute md:inset-0"
+              />
+            ) : (
+              <video
+                src={videoSrc}
+                poster={videoPoster}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                onError={() => setVideoFailed(true)}
+                aria-label="Timelapse of Under Pressure Exterior Cleaning soft washing a home exterior"
+                className="w-full h-full object-cover rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] md:absolute md:inset-0"
+              />
+            )}
           </motion.div>
 
           {/* Right — heading + VS comparison */}

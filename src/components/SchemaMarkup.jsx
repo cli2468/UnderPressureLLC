@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { business, services } from "../data/siteData"
 
-const SITE_URL = "https://underpressurellc.com"
+const SITE_URL = "https://underpressureexterior.com"
 
 function buildSchema() {
   const allServices = [...services.residential, ...services.commercial]
@@ -20,7 +20,7 @@ function buildSchema() {
         url: SITE_URL,
         telephone: "+1-219-307-1207",
         priceRange: "$$",
-        image: `${SITE_URL}/favicon.png`,
+        image: `${SITE_URL}/UnderPressureLogo.png`,
         sameAs: [
           business.socialLinks.facebook,
           business.socialLinks.instagram,
@@ -86,7 +86,7 @@ function buildSchema() {
         "@type": "WebPage",
         "@id": `${SITE_URL}/#webpage`,
         url: SITE_URL,
-        name: "Under Pressure Exterior Cleaning | Northwest Indiana Pressure Washing & Soft Washing",
+        name: "Under Pressure Exterior Cleaning | Northwest Indiana",
         description:
           "Professional soft washing and pressure washing for homes and businesses across Northwest Indiana. Licensed, bonded, insured. 100+ five-star reviews.",
         isPartOf: { "@id": `${SITE_URL}/#website` },

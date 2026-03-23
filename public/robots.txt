@@ -3,7 +3,7 @@
 
 User-agent: *
 Allow: /
-Sitemap: https://underpressurellc.com/sitemap.xml
+Sitemap: https://underpressureexterior.com/sitemap.xml
 
 # AI Search Bots - explicitly allowed for citation
 User-agent: GPTBot

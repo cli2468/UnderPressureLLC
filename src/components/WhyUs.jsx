@@ -1,8 +1,70 @@
-import { motion } from "framer-motion"
-import { Warning, ShieldCheck, ArrowRight, FileText, X, Check } from "@phosphor-icons/react"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Warning, ShieldCheck, ArrowRight, FileText, X, Check, Phone } from "@phosphor-icons/react"
 import videoSrc from "../assets/images/gallery/Timelapse.mp4"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
+
+function InsuranceModal({ onClose }) {
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+        onClick={onClose}
+      >
+        <motion.div
+          key="modal"
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={spring}
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-mid transition-colors"
+            aria-label="Close"
+          >
+            <X size={18} weight="bold" className="text-text-body" />
+          </button>
+
+          {/* Heading */}
+          <h3 className="font-display text-xl uppercase tracking-tight text-text-primary mb-3">
+            Insurance Information
+          </h3>
+          <p className="text-text-body text-sm leading-relaxed mb-7">
+            Our certificate of insurance is available upon request — please give us a call or send us a message and we'll provide it.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href="tel:2193071207"
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-dark text-white font-semibold px-5 py-3 rounded-full text-sm hover:bg-brand-light transition-all duration-200 active:scale-[0.98]"
+            >
+              <Phone size={16} weight="bold" />
+              Call Now
+            </a>
+            <a
+              href="#contact"
+              onClick={onClose}
+              className="flex-1 inline-flex items-center justify-center gap-2 border-2 border-brand-dark text-brand-dark font-semibold px-5 py-3 rounded-full text-sm hover:bg-surface transition-all duration-200 active:scale-[0.98]"
+            >
+              Send a Message
+              <ArrowRight size={16} weight="bold" />
+            </a>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
 
 const theirWay = [
   "May rely on excessive pressure and improper techniques that can etch and permanently damage concrete surfaces.",
@@ -19,7 +81,10 @@ const ourWay = [
 ]
 
 export default function WhyUs() {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
+    <>
     <section id="about" className="py-24 bg-surface-mid/30 md:bg-white">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Mobile layout: heading, video, then content ── */}
@@ -125,25 +190,28 @@ export default function WhyUs() {
               </div>
             </div>
 
-            {/* Insurance link */}
+            {/* Insurance button */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ ...spring, delay: 0.2 }}
             >
-              <a
-                href="#"
+              <button
+                onClick={() => setModalOpen(true)}
                 className="inline-flex items-center gap-2 bg-brand-dark text-white font-semibold px-6 py-3 rounded-full text-sm hover:bg-brand-light transition-all duration-200 active:scale-[0.98]"
               >
                 <FileText size={18} weight="bold" />
                 View Our Insurance Information
                 <ArrowRight size={16} weight="bold" />
-              </a>
+              </button>
             </motion.div>
           </motion.div>
         </div>
       </div>
     </section>
+
+    {modalOpen && <InsuranceModal onClose={() => setModalOpen(false)} />}
+    </>
   )
 }

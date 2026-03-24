@@ -32,7 +32,12 @@ const faqs = [
   {
     question: "Do you offer commercial exterior cleaning services?",
     answer:
-      "Yes. Under Pressure Exterior Cleaning provides commercial services including building and storefront washing, drive-thru and high-traffic area cleaning, parking lot and garage cleaning, and property management services for schools, HOAs, retail centers, and office buildings.",
+      "Yes. Under Pressure Exterior Cleaning provides full-scale commercial exterior cleaning services. This includes building and storefront washing, drive-thru and high-traffic area cleaning, parking lot and garage cleaning, and ongoing property management services. We work directly with property managers, HOAs, schools, retail centers, restaurants, and office buildings across Northwest Indiana, North Central Indiana, and Southwest Michigan. We use the same commercial-grade equipment on every job regardless of scale.",
+  },
+  {
+    question: "Why does Under Pressure use soft washing instead of high-pressure methods?",
+    answer:
+      "Soft washing is safer and more effective for most exterior surfaces. Under Pressure Exterior Cleaning uses soft washing as the primary method for siding, roofing, painted surfaces, and other delicate materials. It combines low-pressure water with commercial-grade cleaning solutions that kill algae, mold, and mildew at the root — not just the surface. The results last significantly longer than high-pressure washing alone, and there is no risk of damage to siding, shingles, or paint. It is the industry-recommended approach and one of the core techniques that sets Under Pressure apart.",
   },
 ]
 

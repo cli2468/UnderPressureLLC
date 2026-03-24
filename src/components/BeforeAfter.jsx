@@ -62,20 +62,8 @@ const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 function Slider({ before, after, label, onInteract, beforePosition, afterPosition }) {
   const [pos, setPos] = useState(50)
-  const [containerW, setContainerW] = useState(0)
   const containerRef = useRef(null)
   const dragging = useRef(false)
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      setContainerW(entries[0].contentRect.width)
-    })
-    observer.observe(el)
-    setContainerW(el.offsetWidth)
-    return () => observer.disconnect()
-  }, [])
 
   const updatePos = useCallback((clientX) => {
     const rect = containerRef.current?.getBoundingClientRect()
@@ -115,21 +103,22 @@ function Slider({ before, after, label, onInteract, beforePosition, afterPositio
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: afterPosition ?? "center" }}
         draggable={false}
+        loading="lazy"
+        decoding="async"
       />
 
-      <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-        <img
-          src={before}
-          alt={`${label} before cleaning`}
-          className="absolute top-0 left-0 h-full object-cover"
-          style={{
-            width: containerW > 0 ? `${containerW}px` : "100vw",
-            maxWidth: "none",
-            objectPosition: beforePosition ?? "center",
-          }}
-          draggable={false}
-        />
-      </div>
+      <img
+        src={before}
+        alt={`${label} before cleaning`}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{
+          clipPath: `inset(0 ${100 - pos}% 0 0)`,
+          objectPosition: beforePosition ?? "center",
+        }}
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
 
       <div
         className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"

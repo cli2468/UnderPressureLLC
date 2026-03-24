@@ -14,6 +14,8 @@ export default function Hero() {
           src={heroImg}
           alt="Freshly cleaned residential driveway and home exterior"
           className="w-full h-full object-cover object-center md:object-[center_25%]"
+          fetchpriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/90 via-brand-dark/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-transparent to-brand-dark/30" />

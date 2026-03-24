@@ -77,20 +77,8 @@ const easeOut = [0.23, 1, 0.32, 1]
 
 function MobileBeforeAfterSlider({ pair }) {
   const [pos, setPos] = useState(50)
-  const [containerW, setContainerW] = useState(0)
   const containerRef = useRef(null)
   const dragging = useRef(false)
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      setContainerW(entries[0].contentRect.width)
-    })
-    observer.observe(el)
-    setContainerW(el.offsetWidth)
-    return () => observer.disconnect()
-  }, [])
 
   function updatePos(clientX) {
     const rect = containerRef.current?.getBoundingClientRect()
@@ -126,23 +114,24 @@ function MobileBeforeAfterSlider({ pair }) {
       <img
         src={pair.after}
         alt={`${pair.label} after cleaning by Under Pressure Exterior Cleaning`}
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: pair.afterPosition ?? "center" }}
         draggable={false}
+        loading="lazy"
+        decoding="async"
       />
-      <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-        <img
-          src={pair.before}
-          alt={`${pair.label} before cleaning`}
-          className="absolute top-0 left-0 h-full object-cover object-center"
-          style={{
-            width: containerW > 0 ? `${containerW}px` : "100vw",
-            maxWidth: "none",
-            objectPosition: pair.beforePosition ?? "center",
-          }}
-          draggable={false}
-        />
-      </div>
+      <img
+        src={pair.before}
+        alt={`${pair.label} before cleaning`}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{
+          clipPath: `inset(0 ${100 - pos}% 0 0)`,
+          objectPosition: pair.beforePosition ?? "center",
+        }}
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
       <div
         className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)]"
         style={{ left: `${pos}%`, transform: "translateX(-50%)" }}
@@ -187,6 +176,8 @@ function ServiceCard({ card, i, expandedCard, setExpandedCard, tab }) {
         alt={`${card.name} result by Under Pressure Exterior Cleaning`}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
+        loading="lazy"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent transition-opacity duration-300 group-hover:from-brand-dark/80" />
 
@@ -288,6 +279,8 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
                 src={clientPaverCleaningPicture}
                 alt={`${card.name} result by Under Pressure Exterior Cleaning`}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
+                loading="lazy"
+                decoding="async"
               />
             ) : beforeAfterPair ? (
               <MobileBeforeAfterSlider pair={beforeAfterPair} />
@@ -297,6 +290,8 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
                 alt={`${card.name} result by Under Pressure Exterior Cleaning`}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
                 style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
+                loading="lazy"
+                decoding="async"
               />
             ) : null}
             <p className="pb-4 text-sm text-text-body leading-relaxed">

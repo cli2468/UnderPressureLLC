@@ -200,6 +200,8 @@ export default function Reviews() {
                 src={reviewPhoto}
                 alt="Under Pressure crew member pressure washing a home exterior"
                 className="w-full h-[240px] object-cover object-center"
+                loading="lazy"
+                decoding="async"
               />
             </div>
 
@@ -268,6 +270,8 @@ export default function Reviews() {
                 src={reviewPhoto}
                 alt="Under Pressure crew member pressure washing a home exterior"
                 className="w-full h-[480px] object-cover object-center"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="flex gap-1 mb-4">

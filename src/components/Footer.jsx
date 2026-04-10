@@ -1,6 +1,5 @@
 import { Phone, MapPin, FacebookLogo, InstagramLogo } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import logo from "../assets/logos/UnderPressureLogo - Transparent.png"
 
 export default function Footer() {
   const socialIconClassName =
@@ -13,11 +12,19 @@ export default function Footer() {
         <div className="grid md:grid-cols-[1fr_auto_auto] gap-16 lg:gap-24 mb-14">
           {/* Brand column */}
           <div>
-            <img
-              src={logo}
-              alt={business.name}
-              className="h-12 w-auto mb-4"
-            />
+            <div className="mb-4 flex items-center gap-3">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-brand-dark/10 bg-brand-dark text-base font-display uppercase tracking-[0.08em] text-accent-light shadow-[0_12px_30px_rgba(15,23,42,0.12)]">
+                UP
+              </span>
+              <div>
+                <div className="font-display text-xl uppercase tracking-tight text-text-primary">
+                  Under Pressure
+                </div>
+                <div className="text-xs font-semibold uppercase tracking-[0.16em] text-text-muted">
+                  Exterior Cleaning
+                </div>
+              </div>
+            </div>
             <p className="text-sm text-text-body leading-relaxed max-w-[38ch]">
               Under Pressure Exterior Cleaning is dedicated to helping
               homeowners and businesses maintain beautiful, well-maintained

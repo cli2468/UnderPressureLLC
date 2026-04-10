@@ -1,86 +1,58 @@
-import { motion } from "framer-motion"
 import { Phone, ArrowRight } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import heroImg from "../assets/images/gallery/Hero1.jpg"
-
-const spring = { type: "spring", stiffness: 100, damping: 20 }
 
 export default function Hero() {
   return (
-    <section className="relative h-[100svh] min-h-[100svh] md:min-h-[95dvh] lg:min-h-[94dvh] md:h-auto bg-brand-dark overflow-hidden">
-      {/* Background image — full bleed, positioned higher on desktop */}
+    <section className="relative h-[100svh] min-h-[100svh] overflow-hidden bg-brand-dark md:h-auto md:min-h-[95dvh] lg:min-h-[94dvh]">
       <div className="absolute inset-0">
         <img
-          src={heroImg}
+          src="/hero-home.jpg"
           alt="Freshly cleaned residential driveway and home exterior"
-          className="w-full h-full object-cover object-center md:object-[center_25%]"
-          fetchpriority="high"
+          className="h-full w-full object-cover object-center md:object-[center_25%]"
+          fetchPriority="high"
+          loading="eager"
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/90 via-brand-dark/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-transparent to-brand-dark/30" />
       </div>
 
-      {/* Content — left aligned */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 flex items-center h-full md:min-h-[95dvh] lg:min-h-[94dvh]">
-        <div className="max-w-xl pt-28 pb-12 md:py-0 lg:pt-24 xl:pt-28">
-
-          <motion.h1
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ ...spring, delay: 0.4 }}
-            className="font-display text-[4.2rem] md:text-7xl tracking-tight text-white leading-[0.9] mb-6 uppercase"
-          >
+      <div className="relative z-10 mx-auto flex h-full max-w-[1440px] items-center px-6 md:min-h-[95dvh] md:px-10 lg:min-h-[94dvh] lg:px-16">
+        <div className="max-w-xl pb-12 pt-28 md:py-0 lg:pt-24 xl:pt-28">
+          <h1 className="hero-reveal mb-6 font-display text-[4.2rem] leading-[0.9] tracking-tight text-white uppercase md:text-7xl">
             Exterior Cleaning,
-            <span className="block text-accent-light mt-2">Done Right.</span>
-          </motion.h1>
+            <span className="mt-2 block text-accent-light">Done Right.</span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ ...spring, delay: 0.6 }}
-            className="text-base md:text-lg text-white/88 leading-relaxed max-w-[44ch] mb-10 drop-shadow-[0_1px_10px_rgba(0,0,0,0.4)]"
-          >
+          <p className="hero-reveal hero-reveal-delay-1 mb-10 max-w-[44ch] text-base leading-relaxed text-white/88 drop-shadow-[0_1px_10px_rgba(0,0,0,0.4)] md:text-lg">
             Your trusted choice for professional pressure washing and soft washing. We safely restore homes and businesses with industry-leading equipment and results you can see instantly.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+          <div className="hero-reveal hero-reveal-delay-2 flex flex-col gap-4 sm:flex-row">
             <a
               href={business.phoneHref}
-              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white hover:text-brand-dark font-bold px-8 py-4 rounded-xl text-lg shadow-[0_8px_30px_rgba(8,145,178,0.3)] transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-lg font-bold text-white shadow-[0_8px_30px_rgba(8,145,178,0.3)] transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-accent-light hover:text-brand-dark active:scale-[0.98]"
             >
               <Phone size={22} weight="bold" />
               Call {business.phone}
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white/20 hover:border-accent/50 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-[border-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-8 py-4 text-lg font-semibold text-white transition-[border-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-accent/50 active:scale-[0.98]"
             >
               Free Estimate
               <ArrowRight size={20} weight="bold" />
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="mt-12"
-          >
-            <span className="inline-flex items-center max-w-full whitespace-nowrap text-[9px] min-[390px]:text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-widest border border-accent/30 px-3 py-1.5 rounded-full leading-tight">
+          <div className="hero-reveal hero-reveal-delay-3 mt-12">
+            <span className="inline-flex max-w-full items-center whitespace-nowrap rounded-full border border-accent/30 px-3 py-1.5 text-[9px] font-semibold leading-tight uppercase tracking-[0.14em] min-[390px]:text-[10px] sm:text-xs sm:tracking-widest">
               <span className="text-accent-light">Business of the Month</span>
               <span className="text-white"> - NWI Life in the Spotlight</span>
             </span>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
-

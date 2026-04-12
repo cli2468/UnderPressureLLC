@@ -6,6 +6,37 @@ import { business, formFields } from "../data/siteData"
 const FORMSPREE_URL = "https://formspree.io/f/mjgaodjr"
 const spring = { type: "spring", stiffness: 100, damping: 20 }
 
+function normalizeUSPhoneDigits(value) {
+  let digits = value.replace(/\D/g, "")
+
+  // The UI already shows +1, so absorb a typed or autofilled leading country code.
+  if (digits === "1") {
+    return ""
+  }
+
+  if (digits.startsWith("1")) {
+    digits = digits.slice(1)
+  }
+
+  return digits.slice(0, 10)
+}
+
+function formatUSPhone(value) {
+  const digits = normalizeUSPhoneDigits(value)
+  const match = digits.match(/(\d{0,3})(\d{0,3})(\d{0,4})/)
+
+  if (!match) return ""
+  if (!match[2]) return match[1]
+
+  return `(${match[1]}) ${match[2]}${match[3] ? `-${match[3]}` : ""}`
+}
+
+function serializeUSPhone(value) {
+  const formatted = formatUSPhone(value)
+
+  return normalizeUSPhoneDigits(value).length === 10 ? `+1 ${formatted}` : formatted
+}
+
 const serviceCities = [
   "Valparaiso",
   "Chesterton",
@@ -28,7 +59,19 @@ export default function Contact() {
   async function handleSubmit(e) {
     e.preventDefault()
     setSending(true)
-    const data = new FormData(e.target)
+    const form = e.currentTarget
+    const phoneField = form.elements.namedItem("phone")
+
+    if (phoneField && "value" in phoneField) {
+      phoneField.value = formatUSPhone(phoneField.value)
+    }
+
+    const data = new FormData(form)
+
+    if (phoneField && "value" in phoneField) {
+      data.set("phone", serializeUSPhone(phoneField.value))
+    }
+
     try {
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
@@ -177,6 +220,38 @@ export default function Contact() {
                               required={field.required}
                               className={`${base} resize-none`}
                             />
+                          </div>
+                        )
+                      }
+
+                      if (field.type === "tel") {
+                        return (
+                          <div key={field.name} className="md:col-span-1">
+                            <label className="block text-sm font-medium text-text-body mb-1.5">
+                              {field.label}
+                              {field.required && <span className="text-accent ml-1">*</span>}
+                            </label>
+                            <div className="flex items-center w-full rounded-xl border border-surface-mid bg-white px-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/40">
+                              <span className="shrink-0 border-r border-surface-mid/80 pr-3 text-sm font-semibold tracking-[0.04em] text-text-primary [font-variant-numeric:tabular-nums]">
+                                +1
+                              </span>
+                              <input
+                                type="tel"
+                                name={field.name}
+                                required={field.required}
+                                autoComplete="tel-national"
+                                inputMode="tel"
+                                placeholder="(555) 000-0000"
+                                minLength={14}
+                                maxLength={14}
+                                title="Please enter a valid 10-digit phone number."
+                                aria-label={field.label}
+                                onInput={(event) => {
+                                  event.currentTarget.value = formatUSPhone(event.currentTarget.value)
+                                }}
+                                className="w-full min-w-0 border-0 bg-transparent px-4 py-3.5 text-text-primary placeholder:text-text-muted/80 focus:outline-none focus:ring-0"
+                              />
+                            </div>
                           </div>
                         )
                       }

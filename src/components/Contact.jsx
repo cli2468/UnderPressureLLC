@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { Phone, CheckCircle, ShieldCheck } from "@phosphor-icons/react"
+import { Phone, Check, CheckCircle, CaretDown, ShieldCheck } from "@phosphor-icons/react"
 import { business, formFields } from "../data/siteData"
 
 const FORMSPREE_URL = "https://formspree.io/f/mjgaodjr"
@@ -55,6 +55,31 @@ const serviceCities = [
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
+  const [isServiceMenuOpen, setIsServiceMenuOpen] = useState(false)
+  const [selectedServices, setSelectedServices] = useState([])
+  const serviceMenuRef = useRef(null)
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (serviceMenuRef.current && !serviceMenuRef.current.contains(event.target)) {
+        setIsServiceMenuOpen(false)
+      }
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setIsServiceMenuOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown)
+    document.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -71,6 +96,8 @@ export default function Contact() {
     if (phoneField && "value" in phoneField) {
       data.set("phone", serializeUSPhone(phoneField.value))
     }
+
+    data.set("service", selectedServices.join(", "))
 
     try {
       const res = await fetch(FORMSPREE_URL, {
@@ -102,6 +129,14 @@ export default function Contact() {
       </p>
     </div>
   )
+
+  function toggleService(service) {
+    setSelectedServices((current) =>
+      current.includes(service)
+        ? current.filter((item) => item !== service)
+        : [...current, service]
+    )
+  }
 
   return (
     <section id="contact" className="relative py-24 bg-surface overflow-hidden">
@@ -191,19 +226,125 @@ export default function Contact() {
                         "w-full px-4 py-3.5 rounded-xl border border-surface-mid bg-white focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent text-text-primary transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"
 
                       if (field.type === "select") {
+                        const selectedCount = selectedServices.length
+                        const triggerLabel =
+                          selectedCount === 0
+                            ? "Select one or more services"
+                            : selectedCount === 1
+                              ? selectedServices[0]
+                              : `${selectedCount} services selected`
+
                         return (
                           <div key={field.name} className="md:col-span-1">
                             <label className="block text-sm font-medium text-text-body mb-1.5">
                               {field.label}
                             </label>
-                            <select name={field.name} required={field.required} className={base}>
-                              <option value="">Select a service</option>
-                              {field.options.map((opt) => (
-                                <option key={opt} value={opt}>
-                                  {opt}
-                                </option>
-                              ))}
-                            </select>
+                            <div ref={serviceMenuRef} className={`relative ${isServiceMenuOpen ? "z-30" : ""}`}>
+                              {isServiceMenuOpen && (
+                                <button
+                                  type="button"
+                                  aria-label="Close service menu"
+                                  onClick={() => setIsServiceMenuOpen(false)}
+                                  className="fixed inset-0 z-10 cursor-default bg-transparent"
+                                />
+                              )}
+                              <input type="hidden" name={field.name} value={selectedServices.join(", ")} />
+                              <button
+                                type="button"
+                                aria-haspopup="listbox"
+                                aria-expanded={isServiceMenuOpen}
+                                aria-label={field.label}
+                                onClick={() => setIsServiceMenuOpen((open) => !open)}
+                                className={`relative z-20 flex min-h-[56px] w-full items-center justify-between gap-3 rounded-xl border bg-white px-4 py-3.5 text-left text-sm transition-[border-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                                  isServiceMenuOpen
+                                    ? "border-accent shadow-[0_0_0_3px_rgba(8,145,178,0.16)]"
+                                    : "border-surface-mid shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+                                }`}
+                              >
+                                <div className="min-w-0 flex-1 pr-2">
+                                  <span
+                                    className={`block truncate ${
+                                      selectedCount === 0 ? "text-text-muted" : "text-text-primary"
+                                    }`}
+                                  >
+                                    {triggerLabel}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {selectedCount > 1 && (
+                                    <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-accent/10 px-2 text-xs font-bold text-accent [font-variant-numeric:tabular-nums]">
+                                      {selectedCount}
+                                    </span>
+                                  )}
+                                  <CaretDown
+                                    size={18}
+                                    weight="bold"
+                                    className={`shrink-0 text-text-body transition-transform duration-200 ${
+                                      isServiceMenuOpen ? "rotate-180" : ""
+                                    }`}
+                                  />
+                                </div>
+                              </button>
+
+                              {selectedCount > 1 && (
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  {selectedServices.map((service) => (
+                                    <button
+                                      key={service}
+                                      type="button"
+                                      onClick={() => toggleService(service)}
+                                      className="inline-flex items-center gap-1 rounded-full border border-accent/20 bg-accent/8 px-3 py-1.5 text-xs font-semibold text-accent transition-colors hover:border-accent/35 hover:bg-accent/12"
+                                    >
+                                      {service}
+                                      <span className="text-[11px] leading-none">x</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div
+                                className={`absolute left-0 right-0 top-[calc(100%+0.6rem)] z-20 overflow-hidden rounded-2xl border bg-white shadow-[0_20px_45px_rgba(15,23,42,0.14)] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                                  isServiceMenuOpen
+                                    ? "pointer-events-auto translate-y-0 opacity-100"
+                                    : "pointer-events-none -translate-y-1 opacity-0"
+                                }`}
+                              >
+                                <div className="border-b border-surface-mid/80 bg-surface/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+                                  Choose any services that apply
+                                </div>
+                                <div role="listbox" aria-multiselectable="true" className="max-h-72 overflow-y-auto p-2">
+                                  {field.options.map((opt) => {
+                                    const isSelected = selectedServices.includes(opt)
+
+                                    return (
+                                      <button
+                                        key={opt}
+                                        type="button"
+                                        role="option"
+                                        aria-selected={isSelected}
+                                        onClick={() => toggleService(opt)}
+                                        className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-3 text-left text-sm transition-[background-color,color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                                          isSelected
+                                            ? "text-text-primary bg-surface/70"
+                                            : "text-text-primary hover:bg-surface"
+                                        }`}
+                                      >
+                                        <span className="font-medium">{opt}</span>
+                                        <span
+                                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                                            isSelected
+                                              ? "border-accent bg-accent text-white shadow-[0_6px_16px_rgba(8,145,178,0.22)]"
+                                              : "border-surface-mid bg-white text-transparent"
+                                          }`}
+                                        >
+                                          <Check size={14} weight="bold" />
+                                        </span>
+                                      </button>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         )
                       }

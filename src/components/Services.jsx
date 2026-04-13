@@ -50,6 +50,10 @@ const imagePositionMap = {
   "Drive-Thrus & High Traffic Areas": "center 62%",
 }
 
+const mobileImagePositionMap = {
+  "Schools, Retail Centers & Offices": "center 24%",
+}
+
 const beforeAfterMap = {
   "House Washing": { before: clientHouseBefore, after: clientHouseAfter, label: "House Washing" },
   "Roof Cleaning": { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
@@ -60,7 +64,12 @@ const beforeAfterMap = {
     beforePosition: "center 62%",
     afterPosition: "center 80%",
   },
-  "Decks & Fences": { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
+  "Decks & Fences": {
+    before: clientDeckBefore,
+    after: clientDeckAfter,
+    label: "Decks & Fences",
+    beforePosition: "center 58%",
+  },
   "Rust Removal": { before: beforeSiding, after: imgSiding, label: "Rust Removal" },
   "Paver Cleaning, Sanding & Sealing": { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
   "Buildings & Storefronts": { before: clientCommercialBuildingBefore, after: clientCommercialBuildingAfter, label: "Buildings & Storefronts" },
@@ -289,7 +298,7 @@ function MobileAccordion({ card, expandedCard, setExpandedCard, tab, i }) {
                 src={imageMap[card.name]}
                 alt={`${card.name} result by Under Pressure Exterior Cleaning`}
                 className="w-full h-[280px] object-cover rounded-xl mb-4"
-                style={{ objectPosition: imagePositionMap[card.name] ?? "center" }}
+                style={{ objectPosition: mobileImagePositionMap[card.name] ?? imagePositionMap[card.name] ?? "center" }}
                 loading="lazy"
                 decoding="async"
               />

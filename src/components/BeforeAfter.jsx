@@ -27,7 +27,12 @@ const pairs = [
     label: "Driveway & Concrete Cleaning",
     afterPosition: "center 66%",
   },
-  { before: clientDeckBefore, after: clientDeckAfter, label: "Decks & Fences" },
+  {
+    before: clientDeckBefore,
+    after: clientDeckAfter,
+    label: "Decks & Fences",
+    beforePosition: "center 58%",
+  },
   { before: clientRoofBefore, after: clientRoofAfter, label: "Roof Cleaning" },
   { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },
   { before: clientPropertyManagementBefore, after: clientPropertyManagementAfter, label: "Property Management" },

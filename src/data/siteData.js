@@ -15,8 +15,8 @@ export const business = {
   ],
   established: "4 years",
   reviews: {
-    displayCount: "50+",
-    exactCount: 53,
+    displayCount: "70+",
+    exactCount: 70,
     rating: 5,
     platforms: ["Google", "Facebook"],
   },
@@ -131,7 +131,7 @@ export const differentiators = [
 ]
 
 export const stats = [
-  { value: "50+", label: "5-Star Reviews" },
+  { value: "70+", label: "5-Star Reviews" },
   { value: "100%", label: "Satisfaction Rate" },
   { value: "4+", label: "Years in Business" },
   { value: "3", label: "Regions Served" },

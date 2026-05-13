@@ -55,7 +55,7 @@ function buildSchema() {
         name: business.legalName,
         alternateName: business.name,
         description:
-          "Professional soft washing and pressure washing company serving residential and commercial clients across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, and insured with 53 five-star reviews. Services include house washing, roof cleaning, concrete cleaning and sealing, and full-scale commercial exterior cleaning for storefronts, parking lots, schools, HOAs, and property management companies.",
+          "Professional soft washing and pressure washing company serving residential and commercial clients across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, and insured with 70+ five-star reviews. Services include house washing, roof cleaning, concrete cleaning and sealing, and full-scale commercial exterior cleaning for storefronts, parking lots, schools, HOAs, and property management companies.",
         url: SITE_URL,
         telephone: "+1-219-307-1207",
         priceRange: "$$",
@@ -165,7 +165,7 @@ function buildSchema() {
         url: SITE_URL,
         name: "Under Pressure Exterior Cleaning | Northwest Indiana",
         description:
-          "Professional soft washing and pressure washing for residential and commercial properties across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, insured. 53 five-star reviews.",
+          "Professional soft washing and pressure washing for residential and commercial properties across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, insured. 70+ five-star reviews.",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#business` },
         dateModified: "2026-03-24",
@@ -249,7 +249,7 @@ function buildSchema() {
             name: "How many reviews does Under Pressure Exterior Cleaning have?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Under Pressure Exterior Cleaning has earned 53 five-star reviews across Google and Facebook. Customers consistently highlight the quality of work, professional communication, fair pricing, and attention to detail. The company maintains a 5.0 star rating and a 100% customer satisfaction rate.",
+              text: "Under Pressure Exterior Cleaning has earned 70+ five-star reviews across Google and Facebook. Customers consistently highlight the quality of work, professional communication, fair pricing, and attention to detail. The company maintains a 5.0 star rating and a 100% customer satisfaction rate.",
             },
           },
         ],

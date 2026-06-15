@@ -18,9 +18,12 @@ import clientCommercialBuildingBefore from "../assets/images/CLIENT-before-after
 import clientConcreteBefore from "../assets/images/CLIENT-before-after/Concrete Before.jpg"
 import clientCommercialSidewalks from "../assets/images/CLIENT-before-after/Commercial Sidewalks .jpg"
 import clientConcreteAfter from "../assets/images/CLIENT-before-after/Concrete After .jpg"
-import clientConcreteSealing from "../assets/images/CLIENT-before-after/Concrete Sealing .png"
+import clientConcreteSealing from "../assets/images/CLIENT-before-after/Concrete Sealing .jpg"
 import clientDeckAfter from "../assets/images/CLIENT-before-after/Deck After.jpg"
 import clientDeckBefore from "../assets/images/CLIENT-before-after/Deck Before .jpg"
+import clientDeckStainBefore from "../assets/images/CLIENT-before-after/Deck.jpeg"
+import clientDeckStainAfter from "../assets/images/CLIENT-before-after/DeckStaining.jpeg"
+import clientWindows from "../assets/images/CLIENT-before-after/Windows.jpg"
 import clientHouseAfter from "../assets/images/CLIENT-before-after/House After .jpg"
 import clientHouseBefore from "../assets/images/CLIENT-before-after/House Before .jpg"
 import clientPaversAfter from "../assets/images/CLIENT-before-after/Pavers After.jpg"
@@ -36,6 +39,8 @@ const imageMap = {
   "Driveway & Concrete Cleaning": clientConcreteAfter,
   "Concrete Sealing": clientConcreteSealing,
   "Decks & Fences": clientDeckAfter,
+  "Deck Staining": clientDeckStainAfter,
+  "Window Cleaning": clientWindows,
   "Rust Removal": imgSiding,
   "Paver Cleaning, Sanding & Sealing": clientPaversAfter,
   "Buildings & Storefronts": clientCommercialBuildingAfter,
@@ -47,6 +52,7 @@ const imageMap = {
 
 const imagePositionMap = {
   "Drive-Thrus & High Traffic Areas": "center 62%",
+  "Window Cleaning": "center 35%",
 }
 
 const mobileImagePositionMap = {
@@ -69,6 +75,11 @@ const beforeAfterMap = {
     after: clientDeckAfter,
     label: "Decks & Fences",
     beforePosition: "center 58%",
+  },
+  "Deck Staining": {
+    before: clientDeckStainBefore,
+    after: clientDeckStainAfter,
+    label: "Deck Staining",
   },
   "Rust Removal": { before: beforeSiding, after: imgSiding, label: "Rust Removal" },
   "Paver Cleaning, Sanding & Sealing": { before: clientPaversBefore, after: clientPaversAfter, label: "Paver Cleaning, Sanding & Sealing" },

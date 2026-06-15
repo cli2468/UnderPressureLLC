@@ -57,6 +57,18 @@ export const services = {
       icon: "Fence",
     },
     {
+      name: "Deck Staining",
+      description:
+        "Protect and refresh your deck with our professional staining services. We clean, prep, and apply a premium stain that enhances the wood's natural beauty while protecting it from sun, moisture, and wear.",
+      icon: "PaintRoller",
+    },
+    {
+      name: "Window Cleaning",
+      description:
+        "Enjoy crystal-clear views with our professional window cleaning services. We remove dirt, water spots, and buildup from your windows, leaving them spotless, streak-free, and shining like new.",
+      icon: "Sun",
+    },
+    {
       name: "Rust Removal",
       description:
         "We use specialized cleaning solutions designed to break down and remove rust stains from concrete, siding, and other exterior surfaces without causing damage.",
@@ -152,6 +164,8 @@ export const formFields = [
       "Driveway & Concrete Cleaning",
       "Concrete Sealing",
       "Decks & Fences",
+      "Deck Staining",
+      "Window Cleaning",
       "Rust Removal",
       "Paver Cleaning, Sanding & Sealing",
       "Buildings & Storefronts",

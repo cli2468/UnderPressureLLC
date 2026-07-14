@@ -398,12 +398,19 @@ export default function Contact() {
                       }
 
                       return (
-                        <div key={field.name} className="md:col-span-1">
+                        <div key={field.name} className={field.fullWidth ? "md:col-span-2" : "md:col-span-1"}>
                           <label className="block text-sm font-medium text-text-body mb-1.5">
                             {field.label}
                             {field.required && <span className="text-accent ml-1">*</span>}
                           </label>
-                          <input type={field.type} name={field.name} required={field.required} className={base} />
+                          <input
+                            type={field.type}
+                            name={field.name}
+                            required={field.required}
+                            autoComplete={field.autoComplete}
+                            placeholder={field.placeholder}
+                            className={base}
+                          />
                         </div>
                       )
                     })}

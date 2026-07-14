@@ -150,9 +150,25 @@ export const stats = [
 ]
 
 export const formFields = [
-  { name: "name", label: "Your Name", type: "text", required: true },
+  { name: "name", label: "Your Name", type: "text", required: true, autoComplete: "name" },
   { name: "phone", label: "Phone Number", type: "tel", required: true },
-  { name: "email", label: "Email", type: "email", required: false },
+  {
+    name: "address",
+    label: "Service Address",
+    type: "text",
+    required: true,
+    autoComplete: "address-line1",
+    placeholder: "123 Main St",
+  },
+  {
+    name: "city",
+    label: "City",
+    type: "text",
+    required: true,
+    autoComplete: "address-level2",
+    placeholder: "Valparaiso",
+  },
+  { name: "email", label: "Email", type: "email", required: false, autoComplete: "email" },
   {
     name: "service",
     label: "Service Needed",

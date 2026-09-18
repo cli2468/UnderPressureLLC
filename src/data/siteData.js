@@ -1,3 +1,55 @@
+// Single source of truth for customer reviews.
+// Rendered by components/Reviews.jsx AND emitted as schema.org Review
+// objects by components/SchemaMarkup.jsx, whose aggregateRating count is
+// derived from this array's length. Adding an entry here updates both.
+export const customerReviews = [
+  {
+    name: "Locas Liam",
+    platform: "google",
+    text: "I can't say enough good things about Under Pressure Exterior Cleaning. From start to finish the experience was amazing. The team arrived on time, paid great attention to detail, and made sure everything was done perfectly. The quality of their work exceeded my expectations and the finished results look incredible.",
+  },
+  {
+    name: "Jim Jessup",
+    platform: "google",
+    text: "Trey and his partner did a great job pressure washing our vinyl siding and decking. They got rid of 35 years of green algae and grime and it looks like new. Trey had great equipment and was efficient and professional. I highly recommend his business and service.",
+  },
+  {
+    name: "Christy Robinson",
+    platform: "google",
+    text: "We will definitely be repeat customers. Very professional and fast service. I didn't think some of the staining would come off our white siding, but everything came out including the chimney staining. Very affordable for high quality work.",
+  },
+  {
+    name: "Mary Cee",
+    platform: "facebook",
+    text: "I was overwhelmed with cleaning up my neglected home after renters moved out. Trey kept me updated every step of the way and the results amazed me. My home and yard look brand new. I will definitely recommend them to anyone who needs work done.",
+  },
+  {
+    name: "Theresa Mattox McArdle",
+    platform: "facebook",
+    text: "Highly recommend. They cleaned my two story house, garage, storage shed, and entire fence. Trey is very professional, quick with service, and very fairly priced. I will definitely use them again.",
+  },
+  {
+    name: "Austin Coleslaw Michaels",
+    platform: "google",
+    text: "They knocked it out of the park at our house in Wanatah. They took an old modular home and outbuildings and made them look almost new again. They worked with me through several issues on my end and still delivered better results than I imagined.",
+  },
+  {
+    name: "Peter Steinhiser",
+    platform: "google",
+    text: "The team did a great job cleaning my siding. They explained the process and the products they used, and the results turned out great.",
+  },
+  {
+    name: "Shawn Sullivan",
+    platform: "google",
+    text: "These guys do a great job and communicate well. Very reliable with great pricing.",
+  },
+  {
+    name: "Tammy Krueger",
+    platform: "facebook",
+    text: "What a great job. Very courteous and professional. I would absolutely recommend them.",
+  },
+]
+
 export const business = {
   name: "Under Pressure Exterior Cleaning",
   legalName: "Under Pressure Exterior Cleaning, LLC",
@@ -15,10 +67,15 @@ export const business = {
   ],
   established: "4 years",
   reviews: {
-    displayCount: "70+",
-    exactCount: 70,
+    // Marketing copy only. Combined Google + Facebook total.
+    displayCount: "100+",
     rating: 5,
     platforms: ["Google", "Facebook"],
+    // Structured data only. Counts ONLY the reviews actually rendered on the
+    // page, never the combined cross-platform total above: Google validates
+    // aggregateRating against the Google Business Profile, and asserting a
+    // Facebook-inclusive number there risks a spammy-markup manual action.
+    schemaReviewCount: customerReviews.length,
   },
   credentials: ["Licensed", "Bonded", "Insured"],
   awards: ["NWI Life Spotlight Business of the Month"],
@@ -143,7 +200,7 @@ export const differentiators = [
 ]
 
 export const stats = [
-  { value: "70+", label: "5-Star Reviews" },
+  { value: "100+", label: "5-Star Reviews" },
   { value: "100%", label: "Satisfaction Rate" },
   { value: "4+", label: "Years in Business" },
   { value: "3", label: "Regions Served" },

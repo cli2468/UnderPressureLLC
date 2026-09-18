@@ -1,46 +1,7 @@
 import { useEffect } from "react"
-import { business, services } from "../data/siteData"
+import { business, services, customerReviews as reviews } from "../data/siteData"
 
 const SITE_URL = "https://underpressureexterior.com"
-
-const reviews = [
-  {
-    author: "Locas Liam",
-    text: "I can't say enough good things about Under Pressure Exterior Cleaning. From start to finish the experience was amazing. The team arrived on time, paid great attention to detail, and made sure everything was done perfectly. The quality of their work exceeded my expectations and the finished results look incredible.",
-  },
-  {
-    author: "Jim Jessup",
-    text: "Trey and his partner did a great job pressure washing our vinyl siding and decking. They got rid of 35 years of green algae and grime and it looks like new. Trey had great equipment and was efficient and professional. I highly recommend his business and service.",
-  },
-  {
-    author: "Christy Robinson",
-    text: "We will definitely be repeat customers. Very professional and fast service. I didn't think some of the staining would come off our white siding, but everything came out including the chimney staining. Very affordable for high quality work.",
-  },
-  {
-    author: "Mary Cee",
-    text: "I was overwhelmed with cleaning up my neglected home after renters moved out. Trey kept me updated every step of the way and the results amazed me. My home and yard look brand new. I will definitely recommend them to anyone who needs work done.",
-  },
-  {
-    author: "Theresa Mattox McArdle",
-    text: "Highly recommend. They cleaned my two story house, garage, storage shed, and entire fence. Trey is very professional, quick with service, and very fairly priced. I will definitely use them again.",
-  },
-  {
-    author: "Austin Coleslaw Michaels",
-    text: "They knocked it out of the park at our house in Wanatah. They took an old modular home and outbuildings and made them look almost new again. They worked with me through several issues on my end and still delivered better results than I imagined.",
-  },
-  {
-    author: "Peter Steinhiser",
-    text: "The team did a great job cleaning my siding. They explained the process and the products they used, and the results turned out great.",
-  },
-  {
-    author: "Shawn Sullivan",
-    text: "These guys do a great job and communicate well. Very reliable with great pricing.",
-  },
-  {
-    author: "Tammy Krueger",
-    text: "What a great job. Very courteous and professional. I would absolutely recommend them.",
-  },
-]
 
 function buildSchema() {
   const allServices = [...services.residential, ...services.commercial]
@@ -55,7 +16,7 @@ function buildSchema() {
         name: business.legalName,
         alternateName: business.name,
         description:
-          "Professional soft washing and pressure washing company serving residential and commercial clients across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, and insured with 70+ five-star reviews. Services include house washing, roof cleaning, concrete cleaning and sealing, and full-scale commercial exterior cleaning for storefronts, parking lots, schools, HOAs, and property management companies.",
+          "Professional soft washing and pressure washing company serving residential and commercial clients across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, and insured with 100+ five-star reviews. Services include house washing, roof cleaning, concrete cleaning and sealing, and full-scale commercial exterior cleaning for storefronts, parking lots, schools, HOAs, and property management companies.",
         url: SITE_URL,
         telephone: "+1-219-307-1207",
         priceRange: "$$",
@@ -82,8 +43,8 @@ function buildSchema() {
           "@type": "AggregateRating",
           ratingValue: "5",
           bestRating: "5",
-          ratingCount: String(business.reviews.exactCount),
-          reviewCount: String(business.reviews.exactCount),
+          ratingCount: String(business.reviews.schemaReviewCount),
+          reviewCount: String(business.reviews.schemaReviewCount),
         },
         review: reviews.map((r) => ({
           "@type": "Review",
@@ -94,7 +55,7 @@ function buildSchema() {
           },
           author: {
             "@type": "Person",
-            name: r.author,
+            name: r.name,
           },
           reviewBody: r.text,
         })),
@@ -165,7 +126,7 @@ function buildSchema() {
         url: SITE_URL,
         name: "Under Pressure Exterior Cleaning | Northwest Indiana",
         description:
-          "Professional soft washing and pressure washing for residential and commercial properties across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, insured. 70+ five-star reviews.",
+          "Professional soft washing and pressure washing for residential and commercial properties across Northwest Indiana, North Central Indiana, and Southwest Michigan. Licensed, bonded, insured. 100+ five-star reviews.",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#business` },
         dateModified: "2026-03-24",
@@ -249,7 +210,7 @@ function buildSchema() {
             name: "How many reviews does Under Pressure Exterior Cleaning have?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Under Pressure Exterior Cleaning has earned 70+ five-star reviews across Google and Facebook. Customers consistently highlight the quality of work, professional communication, fair pricing, and attention to detail. The company maintains a 5.0 star rating and a 100% customer satisfaction rate.",
+              text: "Under Pressure Exterior Cleaning has earned 100+ five-star reviews across Google and Facebook. Customers consistently highlight the quality of work, professional communication, fair pricing, and attention to detail. The company maintains a 5.0 star rating and a 100% customer satisfaction rate.",
             },
           },
         ],

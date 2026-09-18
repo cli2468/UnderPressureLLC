@@ -3,58 +3,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   Star,
 } from "@phosphor-icons/react"
-import { business } from "../data/siteData"
+import { business, customerReviews as allReviews } from "../data/siteData"
 import reviewPhoto from "../assets/images/services/Main.jpg"
 
 const spring = { type: "spring", stiffness: 100, damping: 20 }
-
-const allReviews = [
-  {
-    name: "Locas Liam",
-    platform: "google",
-    text: "I can't say enough good things about Under Pressure Exterior Cleaning. From start to finish the experience was amazing. The team arrived on time, paid great attention to detail, and made sure everything was done perfectly. The quality of their work exceeded my expectations and the finished results look incredible.",
-  },
-  {
-    name: "Jim Jessup",
-    platform: "google",
-    text: "Trey and his partner did a great job pressure washing our vinyl siding and decking. They got rid of 35 years of green algae and grime and it looks like new. Trey had great equipment and was efficient and professional. I highly recommend his business and service.",
-  },
-  {
-    name: "Christy Robinson",
-    platform: "google",
-    text: "We will definitely be repeat customers. Very professional and fast service. I didn't think some of the staining would come off our white siding, but everything came out including the chimney staining. Very affordable for high quality work.",
-  },
-  {
-    name: "Mary Cee",
-    platform: "facebook",
-    text: "I was overwhelmed with cleaning up my neglected home after renters moved out. Trey kept me updated every step of the way and the results amazed me. My home and yard look brand new. I will definitely recommend them to anyone who needs work done.",
-  },
-  {
-    name: "Theresa Mattox McArdle",
-    platform: "facebook",
-    text: "Highly recommend. They cleaned my two story house, garage, storage shed, and entire fence. Trey is very professional, quick with service, and very fairly priced. I will definitely use them again.",
-  },
-  {
-    name: "Austin Coleslaw Michaels",
-    platform: "google",
-    text: "They knocked it out of the park at our house in Wanatah. They took an old modular home and outbuildings and made them look almost new again. They worked with me through several issues on my end and still delivered better results than I imagined.",
-  },
-  {
-    name: "Peter Steinhiser",
-    platform: "google",
-    text: "The team did a great job cleaning my siding. They explained the process and the products they used, and the results turned out great.",
-  },
-  {
-    name: "Shawn Sullivan",
-    platform: "google",
-    text: "These guys do a great job and communicate well. Very reliable with great pricing.",
-  },
-  {
-    name: "Tammy Krueger",
-    platform: "facebook",
-    text: "What a great job. Very courteous and professional. I would absolutely recommend them.",
-  },
-]
 
 function formatReviewerName(name) {
   const parts = name.trim().split(/\s+/)

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { List, X, Phone, ArrowRight } from "@phosphor-icons/react"
-import logo from "../assets/logos/UnderPressureLogo - Transparent.png"
+import logo from "../assets/logos/UnderPressureWordmark-Light.png"
 import { business } from "../data/siteData"
 
 const navLinks = [
@@ -42,20 +42,12 @@ export default function Navbar() {
         >
         <div className="relative w-full px-5 md:px-12 lg:px-16 flex items-center justify-between h-20 md:h-24">
           {/* Logo — left */}
-          <a href="#" className="flex items-center gap-2 md:gap-3.5 flex-shrink min-w-0 max-w-[calc(100%-9.5rem)] md:max-w-none">
+          <a href="#" className="flex items-center flex-shrink min-w-0 max-w-[calc(100%-9.5rem)] md:max-w-none">
             <img
               src={logo}
               alt={business.name}
-              className="h-11 md:h-[3.85rem] w-auto object-contain shrink-0"
+              className="h-16 md:h-20 w-auto max-w-full object-contain"
             />
-            <span className="flex flex-col justify-center min-w-0 leading-none pt-2 pl-0.5 -ml-1 md:pt-3 md:pl-0 md:ml-0">
-              <span className="block font-display text-[14px] md:text-[1.72rem] uppercase tracking-[0.01em] text-white leading-[0.94] md:leading-[0.9] whitespace-nowrap">
-                Under Pressure
-              </span>
-              <span className="block font-sans text-[9px] md:text-[0.82rem] font-medium uppercase tracking-[0.12em] md:tracking-[0.2em] text-white/88 mt-1 md:mt-2 whitespace-nowrap">
-                Exterior Cleaning
-              </span>
-            </span>
           </a>
 
           {/* Links — true center of viewport */}

@@ -1,6 +1,6 @@
 import { Phone, MapPin, FacebookLogo, InstagramLogo } from "@phosphor-icons/react"
 import { business } from "../data/siteData"
-import logo from "../assets/logos/UnderPressureLogo - Transparent.png"
+import logo from "../assets/logos/UnderPressureWordmark-Dark.png"
 
 export default function Footer() {
   const socialIconClassName =
@@ -16,7 +16,7 @@ export default function Footer() {
             <img
               src={logo}
               alt={business.name}
-              className="h-12 w-auto mb-4"
+              className="h-20 w-auto mb-4"
             />
             <p className="text-sm text-text-body leading-relaxed max-w-[38ch]">
               Under Pressure Exterior Cleaning is dedicated to helping

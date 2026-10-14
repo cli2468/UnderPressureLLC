@@ -20,7 +20,7 @@ function buildSchema() {
         url: SITE_URL,
         telephone: "+1-219-307-1207",
         priceRange: "$$",
-        image: `${SITE_URL}/UnderPressureLogo.png`,
+        image: `${SITE_URL}/og-image.jpg`,
         sameAs: [
           business.socialLinks.facebook,
           business.socialLinks.instagram,
